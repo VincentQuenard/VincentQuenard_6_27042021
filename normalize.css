@@ -1,0 +1,21 @@
+/*Normalisation des styles des navigateurs et retrait des soulignements des liens*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+}
+/*main, header, footer {
+  max-width: 1500px;
+  margin: auto;
+}*/
+a:link {
+  text-decoration: none;
+  color: black;
+}
