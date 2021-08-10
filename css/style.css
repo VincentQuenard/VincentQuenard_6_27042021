@@ -10,6 +10,11 @@
 
 body {
   font-family: "DM Sans", sans-serif;
+  font-size: 16px;
+  position: relative;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 2.5rem 4rem;
 }
 
 /*main, header, footer {
@@ -22,6 +27,54 @@ a {
 
 li {
   list-style: none;
+}
+
+.header {
+  display: flex;
+}
+
+/*Couleurs du site*/
+.tag_list {
+  display: flex;
+}
+.tag_list .tag_link {
+  color: #901c1c;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 0.1rem solid #c4c4c4;
+  border-radius: 1rem;
+}
+
+.sr_only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.header_scroll {
+  position: absolute;
+  top: 0.5rem;
+  text-align: center;
+  left: 50%;
+  transform: translate(-50%);
+  background-color: #db8876;
+  border-radius: 5px;
+  padding: 0.4rem 0.8rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.5s ease-in-out;
+  color: black;
+  z-index: 9999;
+}
+.header_scroll:hover {
+  background-color: #901c1c;
+  color: white;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,0 +1,22 @@
+.tag_list {
+  display: flex;
+  .tag_link {
+    color: $couleur_primaire;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 0.1rem solid $couleur_bord_tag;
+    border-radius: 1rem;
+  }
+}
+
+.sr_only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}

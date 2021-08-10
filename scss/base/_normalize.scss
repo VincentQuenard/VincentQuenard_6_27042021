@@ -10,6 +10,11 @@
 
 body {
   font-family: "DM Sans", sans-serif;
+  font-size: 16px;
+  position: relative;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 2.5rem 4rem;
 }
 /*main, header, footer {
   max-width: 1500px;
@@ -22,4 +27,8 @@ a {
 
 li {
   list-style: none;
+}
+
+.header {
+  display: flex;
 }
