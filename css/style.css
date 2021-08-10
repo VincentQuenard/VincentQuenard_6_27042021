@@ -34,15 +34,25 @@ li {
 }
 
 /*Couleurs du site*/
-.tag_list {
-  display: flex;
+.header_filter {
+  width: 100%;
+  margin: 1rem 0;
 }
-.tag_list .tag_link {
+.header_filter .tag_list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+.header_filter .tag_list .tag_link {
   color: #901c1c;
   font-size: 0.75rem;
   font-weight: 500;
   border: 0.1rem solid #c4c4c4;
   border-radius: 1rem;
+  padding: 0.3rem 0.5rem;
+  margin: 0 0.2rem;
+  font-weight: 500;
 }
 
 .sr_only {
