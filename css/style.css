@@ -87,4 +87,16 @@ li {
   color: white;
 }
 
+#main_title {
+  position: absolute;
+  top: 2.8rem;
+  right: 2rem;
+}
+
+h1 {
+  color: #901c1c;
+  font-size: 2.2rem;
+  font-weight: 400;
+}
+
 /*# sourceMappingURL=style.css.map */

@@ -1,11 +1,24 @@
 {
   "name": "vincentquenard_6_27042021",
- "version": "1.0.0",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "sass": "sass --watch ./scss/main.scss:./css/style.css"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VincentQuenard/VincentQuenard_6_27042021.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/VincentQuenard/VincentQuenard_6_27042021/issues"
+  },
+  "homepage": "https://github.com/VincentQuenard/VincentQuenard_6_27042021#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "prettier": "^2.3.2"
+  }
 }
