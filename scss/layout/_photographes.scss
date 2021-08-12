@@ -1,0 +1,53 @@
+#photographe_container {
+  padding: 5rem 0;
+  max-width: 1600px;
+  flex-wrap: wrap;
+}
+.photographe_description {
+  max-width: 17.5rem;
+}
+
+.photographe_link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.photographe_portrait {
+  width: 12.5rem;
+  height: 12.5rem;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 1.1rem 0;
+}
+
+.photographe_name {
+  text-align: center;
+  color: $couleur_secondaire;
+  font-weight: 400;
+  font-size: 2.2rem;
+}
+
+.photographe_localisation {
+  text-align: center;
+  color: $couleur_primaire;
+  font-weight: 400;
+  font-size: 0.85rem;
+  padding-bottom: 0.2rem;
+}
+
+.photographe_words {
+  text-align: center;
+  color: $couleur_noire;
+  font-weight: 400;
+  font-size: 0.65rem;
+  padding-bottom: 0.2rem;
+}
+
+.photographe_price {
+  text-align: center;
+  color: $couleur_tarif;
+  font-weight: 400;
+  font-size: 0.6rem;
+  padding-bottom: 0.5rem;
+}
