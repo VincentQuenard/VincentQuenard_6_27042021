@@ -1,7 +1,9 @@
 #photographe_container {
-  padding: 5rem 0;
+  padding: 3rem 0;
   max-width: 1600px;
+  display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .photographe_description {
   max-width: 17.5rem;

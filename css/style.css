@@ -30,6 +30,10 @@ li {
   list-style: none;
 }
 
+main {
+  justify-content: center;
+}
+
 /*Couleurs du site*/
 .header {
   display: flex;
@@ -45,7 +49,7 @@ li {
     max-width: 100%;
   }
 }
-@media (max-width: 600px) {
+@media (max-width: 375px) {
   .header_logo img {
     width: 9.4rem;
     height: 2.3rem;
@@ -143,9 +147,11 @@ h1 {
   }
 }
 #photographe_container {
-  padding: 5rem 0;
+  padding: 3rem 0;
   max-width: 1600px;
+  display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .photographe_description {
