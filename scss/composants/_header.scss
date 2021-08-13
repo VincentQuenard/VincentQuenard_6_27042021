@@ -3,4 +3,20 @@
   justify-content: space-between;
   width: 80%;
   max-width: 950px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1350px) {
+  .header {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 375px) {
+  .header_logo img {
+    width: 9.4rem;
+    height: 2.3rem;
+    margin-left: 1rem;
+  }
 }

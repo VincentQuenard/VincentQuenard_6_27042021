@@ -1,6 +1,10 @@
 .header_filter {
-  width: 100%;
   margin: 1rem 0;
+}
+@media (max-width: 1350px) {
+  .header_filter {
+    width: 100%;
+  }
 }
 
 .tag_list {
@@ -8,16 +12,11 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+}
 
-  .tag_link {
-    color: $couleur_primaire;
-    font-size: 0.75rem;
-    font-weight: 500;
-    border: 0.1rem solid $couleur_bord_tag;
-    border-radius: 1rem;
-    padding: 0.3rem 0.5rem;
-    margin: 0 0.2rem;
-    font-weight: 500;
+@media (max-width: 380px) {
+  .tag_list {
+    margin: 0 1.5rem 0 1.5rem;
   }
 }
 
@@ -31,4 +30,19 @@
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+.tag_link {
+  color: $couleur_primaire;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 0.1rem solid $couleur_bord_tag;
+  border-radius: 1rem;
+  padding: 0.3rem 0.5rem;
+  margin: 1rem 0.2rem 0 0.2rem;
+}
+
+@media (max-width: 705px) {
+  li {
+    margin-top: 1rem;
+  }
 }
