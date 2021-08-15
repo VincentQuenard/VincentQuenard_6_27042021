@@ -39,6 +39,12 @@
   border-radius: 1rem;
   padding: 0.3rem 0.5rem;
   margin: 1rem 0.2rem 0 0.2rem;
+  transition: all 0.5s ease-in-out;
+
+  &:hover {
+    color: $couleur_blanche;
+    background-color: $couleur_primaire;
+  }
 }
 
 @media (max-width: 705px) {
