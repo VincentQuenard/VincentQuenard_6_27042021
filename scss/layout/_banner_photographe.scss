@@ -1,0 +1,64 @@
+.banner_photographe_container {
+  display: flex;
+  background-color: $couleur_bkg_photographe;
+  border-radius: 0.32rem;
+  height: 19.5rem;
+  margin: 2.5rem 0 0.5rem;
+  padding: 2.5rem;
+}
+
+.banner_photographe_description {
+  width: 33%;
+}
+
+.banner_photographe_nom {
+  font-size: 4rem;
+  color: $couleur_secondaire;
+}
+
+.banner_photographe_localisation {
+  font-size: 1.5rem;
+  color: $couleur_primaire;
+}
+
+.banner_photographe_words {
+  font-size: 1.125rem;
+  color: $couleur_words_photographe;
+  padding-top: 1.8rem;
+}
+
+.banner_photographe_filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 2rem;
+}
+.photographe_page {
+  font-size: 1.125rem;
+  padding: 0.1rem 0.4rem;
+}
+
+.banner_photographe_button {
+  border-radius: 0.32rem;
+  border: none;
+  background-color: $couleur_primaire;
+  color: $couleur_blanche;
+  width: 10.6rem;
+  height: 4.3rem;
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.banner_photographe_img_container {
+  display: flex;
+  justify-content: flex-end;
+  width: 50%;
+}
+
+.banner_photographe_img {
+  border-radius: 50%;
+  width: 12.5rem;
+  height: 12.5rem;
+  object-fit: cover;
+}
