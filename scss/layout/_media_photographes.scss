@@ -1,0 +1,45 @@
+.medias_photographe {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.media_photographe {
+  margin: 3rem;
+}
+
+.media {
+  width: 22rem;
+  height: 19rem;
+  object-fit: cover;
+  border-radius: 0.3rem;
+  border: none;
+  background-color: $couleur_bord_tag;
+}
+
+.media_texte {
+  display: flex;
+  justify-content: space-around;
+}
+
+.media_title {
+  color: $couleur_primaire;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.media_heart {
+  display: flex;
+  text-align: right;
+  color: $couleur_primaire;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.fa-heart {
+  font-size: 1.3rem;
+  color: $couleur_primaire;
+  font-weight: bold;
+  margin-left: 0.4rem;
+}

@@ -278,4 +278,50 @@ h1 {
   object-fit: cover;
 }
 
+.medias_photographe {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.media_photographe {
+  margin: 3rem;
+}
+
+.media {
+  width: 22rem;
+  height: 19rem;
+  object-fit: cover;
+  border-radius: 0.3rem;
+  border: none;
+  background-color: #c4c4c4;
+}
+
+.media_texte {
+  display: flex;
+  justify-content: space-around;
+}
+
+.media_title {
+  color: #901c1c;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.media_heart {
+  display: flex;
+  text-align: right;
+  color: #901c1c;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.fa-heart {
+  font-size: 1.3rem;
+  color: #901c1c;
+  font-weight: bold;
+  margin-left: 0.4rem;
+}
+
 /*# sourceMappingURL=style.css.map */
