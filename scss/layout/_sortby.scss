@@ -1,17 +1,49 @@
 .sortBy {
-  display: flex;
+  width: 12.5rem;
   margin-top: 1.5rem;
+  position: relative;
 }
 
 .dropdown {
   margin-left: 1rem;
-}
-
-.dropdown_trigger {
-  display: flex;
+  background-color: $couleur_primaire;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.1rem 1rem 0.1rem 1rem;
+  border: none;
+  border-radius: 0.31rem;
 }
 
 .dropbox_list {
   display: flex;
   flex-direction: column;
 }
+
+/*.open {
+  display: none;
+}*/
+
+.dropbox_list_open {
+  color: $couleur_blanche;
+  border-top: 1px solid $couleur_blanche;
+  padding: 1rem;
+}
+
+.dopbox_arrow {
+  margin-left: 1.5rem;
+}
+
+.dropdown_trigger {
+  display: flex;
+  background-color: $couleur_primaire;
+  color: $couleur_blanche;
+  font-size: 1.2rem;
+  border: none;
+  font-weight: 700;
+  padding: 1rem;
+}
+
+/*.dropdown_trigger :hover,
+.open {
+  display: block;
+}*/
