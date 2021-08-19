@@ -445,9 +445,9 @@ h1 {
 }
 
 .sortBy {
-  width: 12.5rem;
   margin-top: 1.5rem;
   position: relative;
+  display: flex;
 }
 
 .dropdown {
@@ -492,5 +492,16 @@ h1 {
 .open {
   display: block;
 }*/
+.background_modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: #c4c4c4;
+}
 
 /*# sourceMappingURL=style.css.map */
