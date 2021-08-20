@@ -445,9 +445,12 @@ h1 {
 }
 
 .sortBy {
-  margin-top: 1.5rem;
-  position: relative;
-  display: flex;
+  margin-top: 2rem;
+}
+
+.sortby_label {
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 
 .dropdown {
@@ -455,43 +458,12 @@ h1 {
   background-color: #901c1c;
   font-size: 1.2rem;
   font-weight: 700;
-  padding: 0.1rem 1rem 0.1rem 1rem;
+  padding: 1rem;
   border: none;
   border-radius: 0.31rem;
-}
-
-.dropbox_list {
-  display: flex;
-  flex-direction: column;
-}
-
-/*.open {
-  display: none;
-}*/
-.dropbox_list_open {
   color: white;
-  border-top: 1px solid white;
-  padding: 1rem;
 }
 
-.dopbox_arrow {
-  margin-left: 1.5rem;
-}
-
-.dropdown_trigger {
-  display: flex;
-  background-color: #901c1c;
-  color: white;
-  font-size: 1.2rem;
-  border: none;
-  font-weight: 700;
-  padding: 1rem;
-}
-
-/*.dropdown_trigger :hover,
-.open {
-  display: block;
-}*/
 .background_modal {
   display: none;
   position: fixed;
@@ -501,7 +473,94 @@ h1 {
   height: 100%;
   width: 100%;
   overflow: auto;
-  background-color: #c4c4c4;
+  background-color: rgba(196, 196, 196, 0.6);
+}
+
+.content_modal {
+  margin: 5% auto;
+  width: 100%;
+  max-width: 500px;
+  background: #db8876;
+  border-radius: 0.31rem;
+  overflow: hidden;
+  position: relative;
+  color: black;
+  padding-top: 10px;
+}
+
+.modal_body {
+  padding: 1rem 8%;
+  margin: 1rem auto;
+}
+
+.modal_header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal_title {
+  font-size: 3rem;
+  color: black;
+  font-weight: 400;
+}
+
+.close_modal {
+  background-color: #db8876;
+  border: none;
+  position: relative;
+  height: 30%;
+}
+
+.fa-times {
+  color: white;
+  font-size: 3rem;
+}
+
+.modal_formulaire {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+  font-size: 2rem;
+}
+
+.text-control {
+  border: none;
+  border-radius: 0.31rem;
+  padding: 1rem;
+  font-size: 1.8rem;
+  margin-bottom: 0.9rem;
+}
+
+.btn_submit {
+  background-color: #901c1c;
+  color: white;
+  border: none;
+  border-radius: 0.31rem;
+  padding: 1rem;
+  margin-top: 1rem;
+  width: 50%;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+@media (max-width: 380px) {
+  .content_modal {
+    padding: 0;
+    margin: 0;
+  }
+
+  .modal_title {
+    font-size: 2rem;
+  }
+
+  .modal_formulaire {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+  }
+
+  .btn_submit {
+    margin-left: 25%;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
