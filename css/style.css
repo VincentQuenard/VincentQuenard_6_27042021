@@ -20,6 +20,7 @@ body {
 @media (max-width: 600px) {
   body {
     padding: 1.5rem 0;
+    margin-bottom: 1.5rem;
   }
 }
 a {
@@ -278,7 +279,7 @@ h1 {
   .banner_photographe_button {
     position: fixed;
     height: 2.5rem;
-    bottom: 1rem;
+    bottom: 0.7rem;
     left: 30%;
     z-index: 1;
   }
@@ -547,6 +548,7 @@ h1 {
   .content_modal {
     padding: 0;
     margin: 0;
+    height: 850px;
   }
 
   .modal_title {
@@ -560,6 +562,11 @@ h1 {
 
   .btn_submit {
     margin-left: 25%;
+    margin-top: 3rem;
+  }
+
+  .modal_body {
+    margin-top: 3rem auto;
   }
 }
 
