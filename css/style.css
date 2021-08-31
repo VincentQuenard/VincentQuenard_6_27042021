@@ -268,7 +268,7 @@ h1 {
   border: none;
   background-color: #901c1c;
   color: white;
-  width: 10.6rem;
+  width: 11.6rem;
   height: 4.3rem;
   display: block;
   font-size: 1.25rem;
@@ -408,8 +408,11 @@ h1 {
 .fa-heart {
   font-size: 1.3rem;
   color: #901c1c;
-  font-weight: bold;
   margin-left: 0.4rem;
+}
+
+.fa-heart:hover {
+  font-weight: bold;
 }
 
 #likes_price {
