@@ -116,7 +116,7 @@ main {
 }
 .header_scroll {
   display: none;
-  position: absolute;
+  position: fixed;
   top: 0.5rem;
   text-align: center;
   left: 50%;
@@ -161,11 +161,11 @@ h1 {
   max-width: 1600px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .photographe_description {
-  margin: 3rem;
+  margin: 3.5rem;
 }
 
 .photographe_link {
@@ -227,7 +227,7 @@ h1 {
 }
 
 .banner_photographe_description {
-  width: 33%;
+  width: 40%;
 }
 
 @media (max-width: 1300px) {
@@ -352,6 +352,14 @@ h1 {
   .banner_photographe_img {
     height: 8rem;
     width: 100%;
+  }
+
+  .photographe_description {
+    margin: auto auto 3rem auto;
+  }
+
+  #photographe_container {
+    padding: 3rem 0 0 0;
   }
 }
 .medias_photographe {
