@@ -236,7 +236,7 @@ h1 {
   }
 }
 .banner_photographe_nom {
-  font-size: 4rem;
+  font-size: 3rem;
   color: #d3573c;
 }
 
@@ -360,6 +360,10 @@ h1 {
 
   #photographe_container {
     padding: 3rem 0 0 0;
+  }
+
+  .banner_photographe_filter {
+    padding: 0;
   }
 }
 .medias_photographe {

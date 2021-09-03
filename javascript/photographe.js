@@ -24,30 +24,32 @@ fetch(linkToJson)
     if (data.media != undefined)
       data.media.forEach((Elmedia) => {
         //if (l'id de photographer === au photographeID du media)
-        let media_photographe = document.createElement('div');
-        media_photographe.classList.add('media_photographe');
-        document
-          .querySelector('.medias_photographe')
-          .appendChild(media_photographe);
-        media_photographe.innerHTML =
-          '<img class="media" src="' +
-          Elmedia.image +
-          '" alt="' +
-          Elmedia.alt +
-          '">' +
-          '<div class="media_texte">' +
-          '<p class="media_title">' +
-          Elmedia.title +
-          '</p>' +
-          '<div class="media_heart" aria-label="likes">' +
-          '<p class="nb_likes">' +
-          Elmedia.likes +
-          '</p>' +
-          '<div class="coeur">' +
-          '<i class="far fa-heart"></i>' +
-          '</div>' +
-          '</div>' +
-          '</div>';
+        if (idURL == Elmedia.photographerId) {
+          let media_photographe = document.createElement('div');
+          media_photographe.classList.add('media_photographe');
+          document
+            .querySelector('.medias_photographe')
+            .appendChild(media_photographe);
+          media_photographe.innerHTML =
+            '<img class="media" src="' +
+            Elmedia.image +
+            '" alt="' +
+            Elmedia.alt +
+            '">' +
+            '<div class="media_texte">' +
+            '<p class="media_title">' +
+            Elmedia.title +
+            '</p>' +
+            '<div class="media_heart" aria-label="likes">' +
+            '<p class="nb_likes">' +
+            Elmedia.likes +
+            '</p>' +
+            '<div class="coeur">' +
+            '<i class="far fa-heart"></i>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
+        }
       });
   })
   .catch(function (err) {

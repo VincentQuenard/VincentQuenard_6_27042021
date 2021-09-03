@@ -17,7 +17,7 @@
 }
 
 .banner_photographe_nom {
-  font-size: 4rem;
+  font-size: 3rem;
   color: $couleur_secondaire;
 }
 
@@ -141,5 +141,8 @@
   }
   #photographe_container {
     padding: 3rem 0 0 0;
+  }
+  .banner_photographe_filter {
+    padding: 0;
   }
 }
