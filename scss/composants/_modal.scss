@@ -27,22 +27,20 @@
   margin: 1rem auto;
 }
 
-.modal_header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.modal_title {
+.modal_title,
+.title-photographe {
   font-size: 3rem;
   color: $couleur_noire;
   font-weight: 400;
 }
 
 .close_modal {
+  position: absolute;
   background-color: $couleur_bg_scroll;
   border: none;
-  position: relative;
   height: 30%;
+  top: -6%;
+  right: 7%;
 }
 .fa-times {
   color: $couleur_blanche;

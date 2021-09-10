@@ -1,6 +1,6 @@
 /* Constante qui récupère les données de photopgraphes.json */
-
 const linkToJson = './photographes.json';
+
 /*fetch va faire une requête au fichier json si ok alors .then et exécution de la fonction, sinon erreur .catch*/
 fetch(linkToJson)
   .then(function (response) {
@@ -9,6 +9,7 @@ fetch(linkToJson)
     }
   })
   .then(function (data) {
+    //console.log(data.photographers);
     if (data.photographers != undefined)
       data.photographers.forEach((Elphoto) => {
         createPhotographe(Elphoto);

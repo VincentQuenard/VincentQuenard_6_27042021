@@ -361,10 +361,6 @@ h1 {
   #photographe_container {
     padding: 3rem 0 0 0;
   }
-
-  .banner_photographe_filter {
-    padding: 0;
-  }
 }
 .medias_photographe {
   display: flex;
@@ -420,11 +416,8 @@ h1 {
 .fa-heart {
   font-size: 1.3rem;
   color: #901c1c;
-  margin-left: 0.4rem;
-}
-
-.fa-heart:hover {
   font-weight: bold;
+  margin-left: 0.4rem;
 }
 
 #likes_price {
@@ -509,22 +502,20 @@ h1 {
   margin: 1rem auto;
 }
 
-.modal_header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.modal_title {
+.modal_title,
+.title-photographe {
   font-size: 3rem;
   color: black;
   font-weight: 400;
 }
 
 .close_modal {
+  position: absolute;
   background-color: #db8876;
   border: none;
-  position: relative;
   height: 30%;
+  top: -6%;
+  right: 7%;
 }
 
 .fa-times {
