@@ -136,6 +136,7 @@ const coeurs = document.getElementsByClassName('coeur');
 console.log(coeurs);
 //coeurs.addEventListener('click', clickJaime);
 function clickJaime(id) {
+  console.log(id);
   element.forEach((addLike) => {
     if (addLike.id == id) {
       addLike.likes += 1;

@@ -54,6 +54,10 @@
   font-size: 1.25rem;
   font-weight: 700;
 }
+.banner_photographe_button:hover {
+  background-color: $couleur_bg_scroll;
+  color: $couleur_noire;
+}
 
 @media (max-width: 1000px) {
   .banner_photographe_button {

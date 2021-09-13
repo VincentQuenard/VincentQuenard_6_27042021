@@ -21,7 +21,6 @@
 
             <!--Injection bannière photographe en JS-->
 
-            
         </section>
 
         <section class="sortBy">
@@ -47,47 +46,67 @@
             </span>
             <span id="price_day">400€ / jour</span>--> 
         </div>
-        <!--Formulaire de contact-->
-        <div class="background_modal">
-            <div class="content_modal">
-                <div class="modal_body">
-                    <div class="modal_header">
-                        <h1 class="modal_title">Contactez-moi</h1>
-                        <p class="title-photographe">Mimi Keel</p>
-                        <button class="close_modal" aria-label="Close contact form">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <form class="modal_formulaire" id="formulaire" action="" method="get" aria-labelledby="Contact me Mimi Keel" role="dialog" novalidate>
-                        
-                        <!--Champ prénom-->
-                            <label for="prenom">Prénom</label>
-                            <input class="text-control" type="text" id="prenom" aria-label="First name"
-                            aria-required="true" name="first name"/>
-                            <span id="erreur_prenom"></span>
-                        <!--Champ prénom-->
-                            <label for="nom">Nom</label>
-                            <input class="text-control" type="text" id="nom" aria-label="Last name"
-                            aria-required="true" name="last"/>
-                            <span id="erreur_nom"></span>
-                        <!--Champ email-->
-                        <label for="email">Email</label>
-                        <input class="text-control" type="email" id="email" aria-label="Email"
-                        aria-required="true" name="email"/>
-                        <span id="erreur_nom"></span>
-                         <!--Champ message-->
-                         <label for="message">Votre message</label>
-                         <textarea class="text-control" name="message" id="message" aria-label="Your message"></textarea>
-
-                        <!--Bouton envoyer-->
-                        <button class="btn_submit" type="submit" aria-label="Send">Envoyer</button>
-
-                    </form>
+    </main>
+    <!--Formulaire de contact-->
+    <div class="background_modal" role="dialog">
+        <div class="content_modal">
+            <div class="modal_body">
+                <div class="modal_header">
+                    <h1 class="modal_title">Contactez-moi</h1>
+                    <p class="title-photographe">Mimi Keel</p>
+                    <button class="close_modal" aria-label="Close contact form">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
+                <form class="modal_formulaire" id="formulaire" action="" method="get" aria-labelledby="Contact me Mimi Keel" role="dialog" novalidate>
+                    
+                    <!--Champ prénom-->
+                        <label for="prenom">Prénom</label>
+                        <input class="text-control" type="text" id="prenom" aria-label="First name"
+                        aria-required="true" name="first name"/>
+                        <span id="erreur_prenom"></span>
+                    <!--Champ prénom-->
+                        <label for="nom">Nom</label>
+                        <input class="text-control" type="text" id="nom" aria-label="Last name"
+                        aria-required="true" name="last"/>
+                        <span id="erreur_nom"></span>
+                    <!--Champ email-->
+                    <label for="email">Email</label>
+                    <input class="text-control" type="email" id="email" aria-label="Email"
+                    aria-required="true" name="email"/>
+                    <span id="erreur_nom"></span>
+                     <!--Champ message-->
+                     <label for="message">Votre message</label>
+                     <textarea class="text-control" name="message" id="message" aria-label="Your message"></textarea>
+
+                    <!--Bouton envoyer-->
+                    <button class="btn_submit" type="submit" aria-label="Send">Envoyer</button>
+
+                </form>
             </div>
         </div>
-
-    </main>
+    </div>
+            <!--Lightbox-->
+    <div class="lightbox_container" role="dialog" aria-label="image closeup view">
+        <div class="lightbox">
+            <button class="close_lightbox" aria-label="Close dialog">
+                <i class="fas fa-times close_bigger"></i>
+            </button>
+            <button class="arrow_left" role="link" aria-label="Previous image">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="arrow_right" role="link" aria-label="Next image">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <div class="lightbox_media_box">
+                <img class="lightbox_media" src="./images/MimiID243/Event_PintoWedding.jpg" alt="Recup via js">
+                <h2 class="titre_photo_lightbox">photo test mise en page</h2>
+            </div>
+            
+            
+        </div>
+    </div>
    <script src="./javascript/photographe.js"></script>
+   <script src="./javascript/modal.js"></script>
 </body>
 </html>
