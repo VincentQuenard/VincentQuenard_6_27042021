@@ -28,6 +28,7 @@ fetch(linkToJson)
       });
 
     if (data.media != undefined) element = data.media;
+
     data.media.forEach((Elmedia) => {
       //console.log(Elmedia);
       //if (l'id de photographer === au photographeID du media)
@@ -36,6 +37,7 @@ fetch(linkToJson)
         clickJaime(Elmedia);
       }
     });
+    totalLikes(data.media);
   })
   .catch(function (err) {
     console.log('Erreur' + err);
@@ -100,7 +102,7 @@ function banner_photographe(Elphoto) {
     '">';
 }
 
-/*Fonction qui va créer les médias des photographes reste pattern pour choix si video ou img*/
+/*Fonction qui va créer les médias des photographes choix si video ou img dans le .json*/
 function media_photographe(Elmedia) {
   let media_photographe = document.createElement('div');
   media_photographe.classList.add('media_photographe');
@@ -112,7 +114,9 @@ function media_photographe(Elmedia) {
     Elmedia.title +
     '</p>' +
     '<div class="media_heart" aria-label="likes">' +
-    '<p class="nb_likes">' +
+    '<p class="nb_likes" id=' +
+    Elmedia.id +
+    '>' +
     Elmedia.likes +
     '</p>' +
     '<div class="coeur">' +
@@ -122,27 +126,6 @@ function media_photographe(Elmedia) {
     '</div>' +
     '</div>' +
     '</div>';
-}
-
-let total_likes = document.createElement('span');
-total_likes.setAttribute('id', 'likes');
-document.querySelector('#likes_price').appendChild(total_likes);
-total_likes.innerHTML =
-  '<p id="total_likes">650</p>' + '<i class="far fa-heart total"></i>';
-
-//on pointe le coeur dans une variable :
-const coeurs = document.getElementsByClassName('coeur');
-//On place un listener au click pour chaque id aimer
-console.log(coeurs);
-//coeurs.addEventListener('click', clickJaime);
-function clickJaime(id) {
-  console.log(id);
-  element.forEach((addLike) => {
-    if (addLike.id == id) {
-      addLike.likes += 1;
-      console.log(addLike);
-    }
-  });
 }
 
 // Fonction qui affiche soit video ou soit photo en fonction du media json
@@ -164,6 +147,35 @@ function choix_media(Elmedia) {
       '</video> '
     );
   }
+}
+
+//injection de la bannière total deslikes
+let total_likes = document.createElement('span');
+total_likes.setAttribute('id', 'likes');
+document.querySelector('#likes_price').appendChild(total_likes);
+total_likes.innerHTML = '<p id="total_likes">';
+'</p>' + '<i class="far fa-heart total"></i>';
+
+//Fonction qui va incrémenter le nombre de likes au clic sur les coeurs
+function clickJaime(id) {
+  element.forEach((addLike) => {
+    if (addLike.id == id) {
+      addLike.likes += 1;
+      document.getElementById(id).innerHTML = addLike.likes;
+    }
+  });
+  totalLikes(element);
+}
+
+//fonction qui va faire la somme des likes et s'incrémenter s'il y a un clic sur un coeur
+function totalLikes(element) {
+  let somme = 0;
+  element.forEach((aime) => {
+    if (aime.photographerId == idURL) {
+      somme += aime.likes;
+    }
+  });
+  document.getElementById('total_likes').innerHTML = somme;
 }
 
 /*          

@@ -37,6 +37,7 @@ function createTag(elementTag) {
 }
 /* fonction qui va créer le code html d'un photographe en fonction de ses données du fichier json*/
 function createPhotographe(Elphoto) {
+  console.log(Elphoto.tags);
   let decriptionPhotographe = document.createElement('section');
   decriptionPhotographe.classList.add('photographe_description');
   document

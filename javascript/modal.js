@@ -1,5 +1,5 @@
 // DOM Elements
-const modalbg = document.querySelector('.background_modal');
+/*const modalbg = document.querySelector('.background_modal');
 const modalBtn = document.querySelectorAll('.banner_photographe_button');
 const buttonClose = document.querySelector('.close_modal');
 
@@ -8,4 +8,4 @@ function launchModal() {
   modalbg.style.display = 'block';
 }
 
-console.log(modalbg);
+console.log(modalbg);*/
