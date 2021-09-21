@@ -2,31 +2,62 @@
 const linkToJson = './photographes.json';
 
 /*fetch va faire une requête au fichier json si ok alors .then et exécution de la fonction, sinon erreur .catch*/
-fetch(linkToJson)
-  .then(function (response) {
-    if (response.ok) {
-      return response.json();
-    }
-  })
-  .then(function (data) {
-    //console.log(data.photographers);
-    if (data.photographers != undefined)
-      data.photographers.forEach((Elphoto) => {
-        createPhotographe(Elphoto);
-      });
-  })
-  .catch(function (err) {
-    console.log('Erreur' + err);
-  });
+window.addEventListener('load', () => {
+  fetch(linkToJson)
+    .then(function (response) {
+      if (response.ok) {
+        return response.json();
+      }
+    })
+    .then(function (data) {
+      if (data.photographers != undefined)
+        data.photographers.forEach((Elphoto) => {
+          createPhotographe(Elphoto);
+          // console.log(Elphoto.tags);
+        });
+
+      //TEST TRIER PAR FILTRE CLIC
+      let photographes = data.photographers;
+      const tagsCheck = document.querySelectorAll('.tag_link');
+
+      for (let i = 0; i < tagsCheck.length; i++) {
+        tagsCheck[i].addEventListener('click', (e) => {
+          e.target.dataset.filter;
+          // console.log(e.target);
+
+          e.target.classList.toggle('selected_tag');
+
+          document.querySelector('#photographe_container').innerHTML = '';
+
+          const filter = e.target.dataset.filter;
+          let resultat = [];
+          photographes.filter((photographe) => {
+            if (photographe.tags.indexOf(filter) != -1) {
+              resultat.push(photographe);
+            }
+          });
+          resultat.forEach((Elphoto) => {
+            createPhotographe(Elphoto);
+          });
+        });
+      }
+    })
+    .catch(function (err) {
+      console.log('Erreur' + err);
+    });
+});
 
 /*fonction de création des tags*/
 function createTag(elementTag) {
   let result = '';
   elementTag.forEach((tag) => {
+    //console.log(tag);
     result +=
       '<li>' +
       '<span class="sr_only">Tag link</span>' +
-      '<a class="tag_link" aria-labelledby="' +
+      '<a class="tag_link" data-filter="' +
+      tag +
+      '" aria-labelledby="' +
       tag +
       '" href="#">#' +
       tag +
@@ -37,7 +68,7 @@ function createTag(elementTag) {
 }
 /* fonction qui va créer le code html d'un photographe en fonction de ses données du fichier json*/
 function createPhotographe(Elphoto) {
-  console.log(Elphoto.tags);
+  //console.log(Elphoto.tags);
   let decriptionPhotographe = document.createElement('section');
   decriptionPhotographe.classList.add('photographe_description');
   document
@@ -74,6 +105,13 @@ function createPhotographe(Elphoto) {
     createTag(Elphoto.tags);
   '</ul>' + '</section>';
 }
+/*console.log(document.querySelectorAll('.tag_link'));
+//toogle filtres
+document.querySelectorAll('.tag_link').addEventListener('click', (e) => {
+  e.preventDefault;
+  document.querySelectorAll('.tag_link').classList.toggle('selected_tag');
+});
+*/
 
 //Bouton passer au contenu
 const headerscroll = document.querySelector('.header_scroll');

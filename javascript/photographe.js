@@ -30,9 +30,10 @@ fetch(linkToJson)
     if (data.media != undefined) element = data.media;
 
     data.media.forEach((Elmedia) => {
-      //console.log(Elmedia);
-      //if (l'id de photographer === au photographeID du media)
+      //Si l'id contenu dans l'url == au photographeID du media)
       if (idURL == Elmedia.photographerId) {
+        let trilikes = Elmedia.likes;
+        console.log(trilikes);
         media_photographe(Elmedia);
         clickJaime(Elmedia);
       }
@@ -178,6 +179,29 @@ function totalLikes(element) {
   document.getElementById('total_likes').innerHTML = somme;
 }
 
+// tri par popularité, date ou titre
+let elt = document.querySelector('select');
+elt.addEventListener('change', function () {
+  console.log('value => ' + this.value);
+});
+
+/*let selection = document.querySelector('.dropdown');
+console.log(selection);*/
+
+/*Les objets peuvent être triés d'après les valeurs d'une de leurs propriétés.
+
+var items = [
+  { name: "Edward", value: 21 },
+  { name: "Sharpe", value: 37 },
+  { name: "And", value: 45 },
+  { name: "The", value: -12 },
+  { name: "Magnetic", value: 13 },
+  { name: "Zeros", value: 37 }
+];
+items.sort(function (a, b) {
+  return a.value - b.value;
+});*/
+
 /*          
             <!--insertion des médias du photographe en JS-->
 
@@ -210,23 +234,3 @@ function totalLikes(element) {
             </div>
 
            */
-
-/*idée Compteur likes*
-
-function incrementLikes() {
-  let i = document.querySelector('.nb_likes');
-  i.value = Number(i.value) + 1;
-}
-
-let b = document.querySelector('.fa-heart');
-b.addEventListener('click', incrementLikes);
-
-let clickLikes = Element.likes;
-        document
-          .querySelector('.coeur')
-          .addEventListener('click', function (e) {
-            e.preventDefault;
-            e.stopPropagation;
-
-            document.querySelector('nb_likes').innerHTML = ++clickLikes + '';
-          });*/

@@ -34,7 +34,7 @@
   white-space: nowrap;
   width: 1px;
 }
-.tag_link {
+a.tag_link {
   color: $couleur_primaire;
   font-size: 0.75rem;
   font-weight: 500;
@@ -43,13 +43,19 @@
   padding: 0.3rem 0.5rem;
   margin: 1rem 0.2rem 0 0.2rem;
   transition: all 0.5s ease-in-out;
-
-  &:hover {
+  &.selected_tag {
     color: $couleur_blanche;
     background-color: $couleur_primaire;
   }
+
+  /* &:hover {
+    color: $couleur_blanche;
+    background-color: $couleur_primaire;
+  }*/
 }
 
+/*
+*/
 @media (max-width: 705px) {
   li {
     margin-top: 1rem;
