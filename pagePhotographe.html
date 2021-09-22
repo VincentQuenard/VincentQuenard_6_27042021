@@ -7,6 +7,7 @@
     <script src="https://kit.fontawesome.com/8730c06133.js" crossorigin="anonymous"></script>
     <link rel="icon" type="image/svg" href="./images/favicon.svg" />
     <link rel="stylesheet" href="./css/style.css">
+   
     <title>FishEye - Nos photographes</title>
 </head>
 <body>
@@ -55,7 +56,7 @@
                     <h1 class="modal_title">Contactez-moi</h1>
                     <p class="title-photographe">Mimi Keel</p>
                     <button class="close_modal" aria-label="Close contact form">
-                        <i class="fas fa-times"></i>
+                        <i class="fas fa-times croix_modal"></i>
                     </button>
                 </div>
                 <form class="modal_formulaire" id="formulaire" action="" method="get" aria-labelledby="Contact me Mimi Keel" role="dialog" novalidate>
@@ -74,11 +75,11 @@
                     <label for="email">Email</label>
                     <input class="text-control" type="email" id="email" aria-label="Email"
                     aria-required="true" name="email"/>
-                    <span id="erreur_nom"></span>
+                    <span id="erreur_email"></span>
                      <!--Champ message-->
                      <label for="message">Votre message</label>
                      <textarea class="text-control" name="message" id="message" aria-label="Your message"></textarea>
-
+                     <span id="erreur_message"></span>
                     <!--Bouton envoyer-->
                     <button class="btn_submit" type="submit" aria-label="Send">Envoyer</button>
 

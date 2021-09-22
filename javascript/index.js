@@ -24,7 +24,7 @@ window.addEventListener('load', () => {
         tagsCheck[i].addEventListener('click', (e) => {
           e.target.dataset.filter;
           // console.log(e.target);
-
+          // Ajout du toogle au clic et déclic sur les tags du header
           e.target.classList.toggle('selected_tag');
 
           document.querySelector('#photographe_container').innerHTML = '';
@@ -32,6 +32,7 @@ window.addEventListener('load', () => {
           const filter = e.target.dataset.filter;
           let resultat = [];
           photographes.filter((photographe) => {
+            console.log(photographe);
             if (photographe.tags.indexOf(filter) != -1) {
               resultat.push(photographe);
             }
@@ -105,13 +106,6 @@ function createPhotographe(Elphoto) {
     createTag(Elphoto.tags);
   '</ul>' + '</section>';
 }
-/*console.log(document.querySelectorAll('.tag_link'));
-//toogle filtres
-document.querySelectorAll('.tag_link').addEventListener('click', (e) => {
-  e.preventDefault;
-  document.querySelectorAll('.tag_link').classList.toggle('selected_tag');
-});
-*/
 
 //Bouton passer au contenu
 const headerscroll = document.querySelector('.header_scroll');

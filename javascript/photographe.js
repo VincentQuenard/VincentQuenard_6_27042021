@@ -3,46 +3,182 @@ let element;
 
 let params = new URL(document.location).searchParams;
 let idURL = params.get('id');
+window.addEventListener('load', () => {
+  fetch(linkToJson)
+    .then(function (response) {
+      if (response.ok) {
+        return response.json();
+      }
+    })
+    .then(function (data) {
+      // console.log(data);
+      if (data.photographers != undefined)
+        data.photographers.forEach((Elphoto) => {
+          //console.log(Elphoto);
+          /* Si l'id contenu dans l'url est la même que celle du photgraphe, afficher banner du photographe */
+          if (idURL == Elphoto.id) {
+            banner_photographe(Elphoto);
+            //console.log(Elphoto);
 
-fetch(linkToJson)
-  .then(function (response) {
-    if (response.ok) {
-      return response.json();
-    }
-  })
-  .then(function (data) {
-    // console.log(data);
-    if (data.photographers != undefined)
-      data.photographers.forEach((Elphoto) => {
-        //console.log(Elphoto);
-        /* Si l'id contenu dans l'url est la même que celle du photgraphe, afficher banner du photographe */
-        if (idURL == Elphoto.id) {
-          banner_photographe(Elphoto);
+            //MODAL TESTS
+            //changement du nom de contact en fonction du photographe affiché
+            let name_banner = document.querySelector('.title-photographe');
+            name_banner.innerHTML = Elphoto.name;
 
-          /* Ajout du prix du photographe affiché par jour  */
-          let price_day = document.createElement('span');
-          price_day.setAttribute('id', 'price_day');
-          document.querySelector('#likes_price').appendChild(price_day);
-          price_day.innerHTML += `${Elphoto.price}€ / jour`;
+            // DOM Elements
+            const modalbg = document.querySelector('.background_modal');
+            const modalBtn = document.querySelector(
+              '.banner_photographe_button'
+            );
+            const buttonClose = document.querySelector('.close_modal');
+
+            //sélection des balises du formulaires
+
+            const formulaire = document.getElementById('formulaire');
+            const prenom = document.getElementById('prenom');
+            const erreur_prenom = document.getElementById('erreur_prenom');
+            const nom = document.getElementById('nom');
+            const erreur_nom = document.getElementById('erreur_nom');
+            const messagerie = document.getElementById('email');
+            const erreur_messagerie = document.getElementById('erreur_email');
+            const message = document.getElementById('message');
+            const erreur_message = document.getElementById('erreur_message');
+            const envoi_formulaire = document.querySelector('.btn_submit');
+
+            //Regex
+            const regexLettres = /^[a-zA-Z-\s]+$/;
+            const regexMessagerie =
+              /^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
+
+            // ouverture formulaire au clic sur bouton 'contactez-moi'
+            modalBtn.addEventListener('click', () => {
+              modalbg.style.display = 'block';
+            });
+
+            // fermeture formulaire au clic sur la croix
+            buttonClose.addEventListener('click', () => {
+              modalbg.style.display = 'none';
+            });
+
+            //Vérifications entrées formulaire
+            formulaire.addEventListener('submit', (e) => {
+              /*verification le prénom est vide ou à moins de 2 charactères ou contient des chiffres*/
+              if (
+                prenom.value === 0 ||
+                prenom.value.length <= 2 ||
+                regexLettres.test(prenom.value) == false
+              ) {
+                erreur_prenom.textContent =
+                  'Le prénom doit comporter 2 charactères minimum sans accent et uniquement des lettres.';
+                erreur_prenom.style.fontSize = '1rem';
+                erreur_prenom.style.color = 'red';
+                erreur_prenom.style.marginBottom = '1rem';
+              } else {
+                erreur_prenom.textContent = ''; //pas d'erreur donc pas de message
+              }
+
+              /*verification le nom est vide ou à moins de 2 charactères ou contient des chiffres*/
+
+              if (
+                nom.value === 0 ||
+                nom.value.length <= 2 ||
+                regexLettres.test(nom.value) == false
+              ) {
+                erreur_nom.textContent =
+                  'Le nom doit comporter 2 charactères minimum sans accent et uniquement des lettres.';
+                erreur_nom.style.fontSize = '1rem';
+                erreur_nom.style.color = 'red';
+                erreur_nom.style.marginBottom = '1rem';
+              } else {
+                erreur_nom.textContent = ''; //pas d'erreur donc pas de message
+              }
+
+              //verification email valide
+
+              if (regexMessagerie.test(messagerie.value)) {
+                // test regex mail ok
+                erreur_messagerie.textContent = '';
+                // Pas d'erreur
+              } else {
+                // Caractère absent ou ne répondant pas aux conditions du regex
+                erreur_messagerie.textContent =
+                  'Veuillez entrer une adresse de messagerie valide';
+                erreur_messagerie.style.fontSize = '1rem';
+                erreur_messagerie.style.color = 'red';
+                erreur_messagerie.style.marginBottom = '1rem';
+              }
+
+              //verification message non vide
+              if (message.value === 0 || message.value.length <= 10) {
+                erreur_message.textContent =
+                  'Veuillez entrer un message de 10 charactères minimum';
+                erreur_message.style.fontSize = '1rem';
+                erreur_message.style.color = 'red';
+                erreur_message.style.marginBottom = '1rem';
+              } else {
+                erreur_message.textContent = ''; //pas d'erreur donc pas de message
+              }
+
+              e.preventDefault(); //bloque l'envoi automatique du formulaire s'il n'est pas correctement rempli
+
+              //Envoi formulaire au clic sur bouton envoyer si tout le formulaire est ok
+              envoi_formulaire.addEventListener('click', () => {
+                if (
+                  prenom.value &&
+                  nom.value &&
+                  messagerie.value &&
+                  message.value
+                ) {
+                  modalbg.style.display = 'none';
+                }
+              });
+            });
+
+            //FIN TEST MODAL
+
+            /* Ajout du prix du photographe affiché par jour  */
+            let price_day = document.createElement('span');
+            price_day.setAttribute('id', 'price_day');
+            document.querySelector('#likes_price').appendChild(price_day);
+            price_day.innerHTML += `${Elphoto.price}€ / jour`;
+          }
+        });
+
+      if (data.media != undefined) element = data.media;
+
+      data.media.forEach((Elmedia) => {
+        //Si l'id contenu dans l'url == au photographeID du media)
+        if (idURL == Elmedia.photographerId) {
+          let trilikes = Elmedia.likes;
+          console.log(trilikes);
+          media_photographe(Elmedia);
+          clickJaime(Elmedia);
         }
       });
+      totalLikes(data.media);
+      //test filtres medias par filtre banner photographe
+      /* let medias = data.media;
+      const tagsCheck = document.querySelectorAll('.tag_link');
 
-    if (data.media != undefined) element = data.media;
+      for (let i = 0; i < tagsCheck.length; i++) {
+        tagsCheck[i].addEventListener('click', (e) => {
+          e.target.dataset.filter;
+          //console.log(e.target);
+          // Ajout du toogle au clic et déclic sur les tags du header
+          e.target.classList.toggle('selected_tag');
 
-    data.media.forEach((Elmedia) => {
-      //Si l'id contenu dans l'url == au photographeID du media)
-      if (idURL == Elmedia.photographerId) {
-        let trilikes = Elmedia.likes;
-        console.log(trilikes);
-        media_photographe(Elmedia);
-        clickJaime(Elmedia);
-      }
+          document.querySelector('.medias_photographe').innerHTML = '';
+
+          const filter = e.target.dataset.filter;
+          console.log(filter);
+        });
+      }*/
+      //FIN TEST FILTRES
+    })
+    .catch(function (err) {
+      console.log('Erreur' + err);
     });
-    totalLikes(data.media);
-  })
-  .catch(function (err) {
-    console.log('Erreur' + err);
-  });
+});
 
 /*fonction de création des tags*/
 function createTag(elementTag) {
@@ -51,7 +187,9 @@ function createTag(elementTag) {
     result +=
       '<li>' +
       '<span class="sr_only">Tag link</span>' +
-      '<a class="tag_link photographe_page" href="#">#' +
+      '<a class="tag_link photographe_page" data-filter="' +
+      tag +
+      '" href="#">#' +
       tag +
       '</a>' +
       '</li>';
@@ -176,13 +314,15 @@ function totalLikes(element) {
       somme += aime.likes;
     }
   });
-  document.getElementById('total_likes').innerHTML = somme;
+  document.getElementById('total_likes').innerHTML =
+    somme + '<i class="far fa-heart total"></i>';
 }
 
 // tri par popularité, date ou titre
-let elt = document.querySelector('select');
-elt.addEventListener('change', function () {
-  console.log('value => ' + this.value);
+let tri = document.querySelector('select');
+tri.addEventListener('change', function (e) {
+  e.target.value;
+  console.log(e.target.value);
 });
 
 /*let selection = document.querySelector('.dropdown');

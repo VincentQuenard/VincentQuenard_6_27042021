@@ -29,7 +29,7 @@
 
 .modal_title,
 .title-photographe {
-  font-size: 3rem;
+  font-size: 2.8rem;
   color: $couleur_noire;
   font-weight: 400;
 }
@@ -38,11 +38,11 @@
   position: absolute;
   background-color: $couleur_bg_scroll;
   border: none;
-  height: 30%;
+  height: 28%;
   top: -6%;
   right: 7%;
 }
-.fa-times {
+.croix_modal {
   color: $couleur_blanche;
   font-size: 3rem;
 }

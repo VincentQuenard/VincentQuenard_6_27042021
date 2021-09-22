@@ -515,7 +515,7 @@ h1 {
 
 .modal_title,
 .title-photographe {
-  font-size: 3rem;
+  font-size: 2.8rem;
   color: black;
   font-weight: 400;
 }
@@ -524,12 +524,12 @@ h1 {
   position: absolute;
   background-color: #db8876;
   border: none;
-  height: 30%;
+  height: 28%;
   top: -6%;
   right: 7%;
 }
 
-.fa-times {
+.croix_modal {
   color: white;
   font-size: 3rem;
 }
@@ -641,7 +641,7 @@ h1 {
   font-size: 3rem;
 }
 
-.fa-times {
+.close_bigger {
   color: #901c1c;
   font-size: 2rem;
 }
