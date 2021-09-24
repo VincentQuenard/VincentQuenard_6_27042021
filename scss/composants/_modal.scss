@@ -74,6 +74,11 @@
   font-weight: 700;
 }
 
+.btn_submit:hover {
+  background-color: $couleur_tarif;
+  color: $couleur_noire;
+}
+
 @media (max-width: 380px) {
   .content_modal {
     padding: 0;

@@ -20,7 +20,8 @@ window.addEventListener('load', () => {
             banner_photographe(Elphoto);
             //console.log(Elphoto);
 
-            //MODAL TESTS
+            //MODAL
+
             //changement du nom de contact en fonction du photographe affiché
             let name_banner = document.querySelector('.title-photographe');
             name_banner.innerHTML = Elphoto.name;
@@ -129,12 +130,16 @@ window.addEventListener('load', () => {
                   messagerie.value &&
                   message.value
                 ) {
+                  console.log(prenom.value);
+                  console.log(nom.value);
+                  console.log(messagerie.value);
+                  console.log(message.value);
                   modalbg.style.display = 'none';
                 }
               });
             });
 
-            //FIN TEST MODAL
+            //FIN  MODAL
 
             /* Ajout du prix du photographe affiché par jour  */
             let price_day = document.createElement('span');
@@ -149,15 +154,34 @@ window.addEventListener('load', () => {
       data.media.forEach((Elmedia) => {
         //Si l'id contenu dans l'url == au photographeID du media)
         if (idURL == Elmedia.photographerId) {
-          let trilikes = Elmedia.likes;
-          console.log(trilikes);
+          // console.log(Elmedia);
+          // let trilikes = Elmedia.likes;
+          // console.log(trilikes);
           media_photographe(Elmedia);
           clickJaime(Elmedia);
+          lightbox_media(Elmedia);
+
+          //TEST LIGHTBOX CONFIG
+          const bg_lightbox = document.querySelector('.lightbox_container');
+          const btn_lightbox = document.querySelectorAll('.media');
+          const close_lightbox = document.querySelector('.close_bigger');
+          // ouverture lighbox en cliquant sur un media
+          btn_lightbox.forEach((btn) =>
+            btn.addEventListener('click', () => {
+              bg_lightbox.style.display = 'block';
+            })
+          );
+
+          // fermeture lightbox au clic sur la croix
+          close_lightbox.addEventListener('click', () => {
+            bg_lightbox.style.display = 'none';
+          });
         }
       });
       totalLikes(data.media);
       //test filtres medias par filtre banner photographe
-      /* let medias = data.media;
+      /*let medias = data.media;
+      console.log(medias);
       const tagsCheck = document.querySelectorAll('.tag_link');
 
       for (let i = 0; i < tagsCheck.length; i++) {
@@ -324,6 +348,42 @@ tri.addEventListener('change', function (e) {
   e.target.value;
   console.log(e.target.value);
 });
+
+// Fonction qui va afficher les medias dans la lightbox
+function lightbox_media(Elmedia) {
+  console.log(Elmedia);
+  let medias_lightbox = document.createElement('div');
+  medias_lightbox.classList.add('lightbox_media_box');
+  document.querySelector('.lightbox').appendChild(medias_lightbox);
+  medias_lightbox.innerHTML = lightbox_choix_media(Elmedia);
+}
+
+//fonction appelée dans lightbox_media pour affichage si img ou video dans json
+function lightbox_choix_media(Elmedia) {
+  if (Elmedia.image) {
+    return (
+      '<img class="lightbox_media" src="' +
+      Elmedia.image +
+      '" alt="' +
+      Elmedia.alt +
+      '">' +
+      '<h2 class="titre_photo_lightbox">' +
+      Elmedia.title +
+      '</h2>'
+    );
+  } else if (Elmedia.video) {
+    return (
+      '<video controls class="lightbox_media">' +
+      '<source src="' +
+      Elmedia.video +
+      '" type=video/mp4>' +
+      '</video> ' +
+      '<h2 class="titre_photo_lightbox">' +
+      Elmedia.title +
+      '</h2>'
+    );
+  }
+}
 
 /*let selection = document.querySelector('.dropdown');
 console.log(selection);*/

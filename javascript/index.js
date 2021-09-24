@@ -18,6 +18,7 @@ window.addEventListener('load', () => {
 
       //TEST TRIER PAR FILTRE CLIC
       let photographes = data.photographers;
+      console.log(photographes);
       const tagsCheck = document.querySelectorAll('.tag_link');
 
       for (let i = 0; i < tagsCheck.length; i++) {
@@ -30,6 +31,7 @@ window.addEventListener('load', () => {
           document.querySelector('#photographe_container').innerHTML = '';
 
           const filter = e.target.dataset.filter;
+          console.log(filter);
           let resultat = [];
           photographes.filter((photographe) => {
             console.log(photographe);
