@@ -675,4 +675,8 @@ h1 {
   top: 50%;
 }
 
+.hidden {
+  display: none;
+}
+
 /*# sourceMappingURL=style.css.map */

@@ -1,6 +1,5 @@
 const linkToJson = './photographes.json';
 let element;
-
 let params = new URL(document.location).searchParams;
 let idURL = params.get('id');
 window.addEventListener('load', () => {
@@ -112,7 +111,7 @@ window.addEventListener('load', () => {
               //verification message non vide
               if (message.value === 0 || message.value.length <= 10) {
                 erreur_message.textContent =
-                  'Veuillez entrer un message de 10 charactères minimum';
+                  'Veuillez entrer un message de 10 charactères minimums';
                 erreur_message.style.fontSize = '1rem';
                 erreur_message.style.color = 'red';
                 erreur_message.style.marginBottom = '1rem';
@@ -154,16 +153,18 @@ window.addEventListener('load', () => {
       data.media.forEach((Elmedia) => {
         //Si l'id contenu dans l'url == au photographeID du media)
         if (idURL == Elmedia.photographerId) {
-          // console.log(Elmedia);
+          //console.log(Elmedia.title);
           // let trilikes = Elmedia.likes;
           // console.log(trilikes);
           media_photographe(Elmedia);
           clickJaime(Elmedia);
           lightbox_media(Elmedia);
+          Triage(Elmedia);
 
-          //TEST LIGHTBOX CONFIG
+          //TEST LIGHTBOX CONFIG 1 tuto weformyou
           const bg_lightbox = document.querySelector('.lightbox_container');
           const btn_lightbox = document.querySelectorAll('.media');
+          //console.log(btn_lightbox);
           const close_lightbox = document.querySelector('.close_bigger');
           // ouverture lighbox en cliquant sur un media
           btn_lightbox.forEach((btn) =>
@@ -176,28 +177,29 @@ window.addEventListener('load', () => {
           close_lightbox.addEventListener('click', () => {
             bg_lightbox.style.display = 'none';
           });
+
+          const display_media = document.querySelectorAll(
+            '.lightbox_media_box'
+          );
+          //console.log(display_media);
+
+          /* let mediaActive = 0;
+          for (let i = 1; i < display_media.length; i += 1) {
+            display_media.classList.add('hidden');
+          }
+          //clic flèche suivant
+          document
+            .querySelector('.arrow_right')
+            .addEventListener('click', function () {
+              display_media[mediaActive].classList.add('.hidden');
+              mediaActive += 1;
+              display_media[mediaActive].classList.remove('.hidden');
+            });*/
         }
       });
       totalLikes(data.media);
-      //test filtres medias par filtre banner photographe
-      /*let medias = data.media;
-      console.log(medias);
-      const tagsCheck = document.querySelectorAll('.tag_link');
 
-      for (let i = 0; i < tagsCheck.length; i++) {
-        tagsCheck[i].addEventListener('click', (e) => {
-          e.target.dataset.filter;
-          //console.log(e.target);
-          // Ajout du toogle au clic et déclic sur les tags du header
-          e.target.classList.toggle('selected_tag');
-
-          document.querySelector('.medias_photographe').innerHTML = '';
-
-          const filter = e.target.dataset.filter;
-          console.log(filter);
-        });
-      }*/
-      //FIN TEST FILTRES
+      //LE CLIC SUR UN FILTRE DOIT FILTRER INDEX.HTML EN AFFICHER PHOTOGRAPHES AYANT CE FILTRE
     })
     .catch(function (err) {
       console.log('Erreur' + err);
@@ -213,7 +215,7 @@ function createTag(elementTag) {
       '<span class="sr_only">Tag link</span>' +
       '<a class="tag_link photographe_page" data-filter="' +
       tag +
-      '" href="#">#' +
+      '" href="../index.html">#' +
       tag +
       '</a>' +
       '</li>';
@@ -342,16 +344,9 @@ function totalLikes(element) {
     somme + '<i class="far fa-heart total"></i>';
 }
 
-// tri par popularité, date ou titre
-let tri = document.querySelector('select');
-tri.addEventListener('change', function (e) {
-  e.target.value;
-  console.log(e.target.value);
-});
-
 // Fonction qui va afficher les medias dans la lightbox
 function lightbox_media(Elmedia) {
-  console.log(Elmedia);
+  // console.log(Elmedia);
   let medias_lightbox = document.createElement('div');
   medias_lightbox.classList.add('lightbox_media_box');
   document.querySelector('.lightbox').appendChild(medias_lightbox);
@@ -383,6 +378,27 @@ function lightbox_choix_media(Elmedia) {
       '</h2>'
     );
   }
+}
+
+// TEST TRI DROPDOWN
+
+// tri par popularité, date ou titre
+function Triage(Elmedia) {
+  //console.log(Elmedia);
+  const tableau = [Elmedia];
+  console.log(tableau);
+  let tri = document.querySelector('select');
+  tri.addEventListener('change', function (e) {
+    e.target.value;
+    console.log(e.target.value);
+    if (e.target.value == 'popularite') {
+      tableau.sort((a, b) => (a.likes < b.likes ? 1 : -1));
+    } else if (e.target.value == 'date') {
+      tableau.sort((a, b) => (a.date < b.date ? 1 : -1));
+    } else if (e.target.value == 'titre') {
+      tableau.sort((a, b) => (a.title < b.title ? 1 : -1));
+    }
+  });
 }
 
 /*let selection = document.querySelector('.dropdown');
