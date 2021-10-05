@@ -158,17 +158,36 @@ window.addEventListener('load', () => {
           // console.log(trilikes);
           media_photographe(Elmedia);
           clickJaime(Elmedia);
-          lightbox_media(Elmedia);
-          Triage(Elmedia);
+          //lightbox_media(Elmedia);
 
-          //TEST LIGHTBOX CONFIG 1 tuto weformyou
+          // TEST TRI DROPDOWN
+
+          // tri par popularité, date ou titre
+          let tableau = [];
+          console.log(tableau);
+          console.log(Elmedia);
+          let tri = document.querySelector('select');
+          tri.addEventListener('change', function (e) {
+            e.target.value;
+            console.log(e.target.value);
+            if (e.target.value == 'popularite') {
+              tableau.sort((a, b) => (a.likes < b.likes ? 1 : -1));
+            } else if (e.target.value == 'date') {
+              tableau.sort((a, b) => (a.date < b.date ? 1 : -1));
+            } else if (e.target.value == 'titre') {
+              tableau.sort((a, b) => (a.title < b.title ? 1 : -1));
+            }
+          });
+
+          //TEST LIGHTBOX CONFIG 1 tuto
           const bg_lightbox = document.querySelector('.lightbox_container');
-          const btn_lightbox = document.querySelectorAll('.media');
+          const links = document.querySelectorAll('.media_photographe a');
           //console.log(btn_lightbox);
           const close_lightbox = document.querySelector('.close_bigger');
           // ouverture lighbox en cliquant sur un media
-          btn_lightbox.forEach((btn) =>
-            btn.addEventListener('click', () => {
+          links.forEach((link) =>
+            link.addEventListener('click', function (e) {
+              e.preventDefault;
               bg_lightbox.style.display = 'block';
             })
           );
@@ -178,16 +197,21 @@ window.addEventListener('load', () => {
             bg_lightbox.style.display = 'none';
           });
 
-          const display_media = document.querySelectorAll(
-            '.lightbox_media_box'
-          );
-          //console.log(display_media);
+          let medias_lightbox = document.createElement('div');
+          medias_lightbox.classList.add('lightbox_media_box');
+          document.querySelector('.lightbox').appendChild(medias_lightbox);
+          medias_lightbox.innerHTML = lightbox_choix_media(Elmedia);
+          let title_photo = document.createElement('h2');
+          title_photo.classList.add('titre_photo_lightbox');
+          document.querySelector('.lightbox').appendChild(title_photo);
+          title_photo.innerHTML = `${Elmedia.title}`;
 
-          /* let mediaActive = 0;
+          /*let mediaActive = 0;
           for (let i = 1; i < display_media.length; i += 1) {
             display_media.classList.add('hidden');
           }
           //clic flèche suivant
+
           document
             .querySelector('.arrow_right')
             .addEventListener('click', function () {
@@ -297,19 +321,27 @@ function media_photographe(Elmedia) {
 function choix_media(Elmedia) {
   if (Elmedia.image) {
     return (
+      '<a href="' +
+      Elmedia.image +
+      '">' +
       '<img class="media" src="' +
       Elmedia.image +
       '" alt="' +
       Elmedia.alt +
-      '">'
+      '"img>' +
+      '</a>'
     );
   } else if (Elmedia.video) {
     return (
+      '<a href="' +
+      Elmedia.video +
+      '">' +
       '<video controls class="media">' +
       '<source src="' +
       Elmedia.video +
       '" type=video/mp4>' +
-      '</video> '
+      '</video> ' +
+      '</a>'
     );
   }
 }
@@ -345,60 +377,22 @@ function totalLikes(element) {
 }
 
 // Fonction qui va afficher les medias dans la lightbox
-function lightbox_media(Elmedia) {
-  // console.log(Elmedia);
-  let medias_lightbox = document.createElement('div');
-  medias_lightbox.classList.add('lightbox_media_box');
-  document.querySelector('.lightbox').appendChild(medias_lightbox);
-  medias_lightbox.innerHTML = lightbox_choix_media(Elmedia);
-}
+//function lightbox_media(Elmedia) {
+// console.log(Elmedia);
 
 //fonction appelée dans lightbox_media pour affichage si img ou video dans json
 function lightbox_choix_media(Elmedia) {
   if (Elmedia.image) {
-    return (
-      '<img class="lightbox_media" src="' +
-      Elmedia.image +
-      '" alt="' +
-      Elmedia.alt +
-      '">' +
-      '<h2 class="titre_photo_lightbox">' +
-      Elmedia.title +
-      '</h2>'
-    );
+    return '<img  src="' + Elmedia.image + '" alt="' + Elmedia.alt + '">';
   } else if (Elmedia.video) {
     return (
-      '<video controls class="lightbox_media">' +
+      '<video controls >' +
       '<source src="' +
       Elmedia.video +
       '" type=video/mp4>' +
-      '</video> ' +
-      '<h2 class="titre_photo_lightbox">' +
-      Elmedia.title +
-      '</h2>'
+      '</video>'
     );
   }
-}
-
-// TEST TRI DROPDOWN
-
-// tri par popularité, date ou titre
-function Triage(Elmedia) {
-  //console.log(Elmedia);
-  const tableau = [Elmedia];
-  console.log(tableau);
-  let tri = document.querySelector('select');
-  tri.addEventListener('change', function (e) {
-    e.target.value;
-    console.log(e.target.value);
-    if (e.target.value == 'popularite') {
-      tableau.sort((a, b) => (a.likes < b.likes ? 1 : -1));
-    } else if (e.target.value == 'date') {
-      tableau.sort((a, b) => (a.date < b.date ? 1 : -1));
-    } else if (e.target.value == 'titre') {
-      tableau.sort((a, b) => (a.title < b.title ? 1 : -1));
-    }
-  });
 }
 
 /*let selection = document.querySelector('.dropdown');

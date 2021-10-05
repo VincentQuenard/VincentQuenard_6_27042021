@@ -620,6 +620,15 @@ h1 {
   border-radius: 0.6rem;
   overflow: hidden;
 }
+.lightbox_media_box img,
+.lightbox_media_box video {
+  margin: auto;
+  height: 85%;
+  width: 70%;
+  position: absolute;
+  border-radius: 0.6rem;
+  object-fit: cover;
+}
 
 .titre_photo_lightbox {
   position: absolute;
@@ -629,15 +638,6 @@ h1 {
   font-size: 1.5rem;
   font-weight: 400;
   color: #901c1c;
-}
-
-.lightbox_media {
-  margin: auto;
-  height: 85%;
-  width: 70%;
-  position: absolute;
-  border-radius: 0.6rem;
-  object-fit: cover;
 }
 
 .fa-chevron-right,

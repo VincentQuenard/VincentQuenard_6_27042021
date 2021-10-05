@@ -22,7 +22,6 @@ window.addEventListener('load', () => {
         tagsCheck[i].addEventListener('click', (e) => {
           //On récupère le nom du filtre sélectionné lors du clic
           e.target.dataset.filter;
-          console.log(e.target);
           // on remplace l'affichage des photographes en fonction du filtre sélectionné
           document.querySelector('#photographe_container').innerHTML = '';
           // On déclare une variable égale à un tableau vide que l'on remplit en fonction des résultats obtenus aux clics.
@@ -30,28 +29,21 @@ window.addEventListener('load', () => {
           // la classe selected tag est ajoutée en html sur la balise sélectionnée
           if (e.target.classList.contains('selected_tag')) {
             e.target.classList.remove('selected_tag');
-            let tag_selected = document.querySelectorAll('.selected_tag');
-            //Si aucun tag n'est sélectionné, on affiche tous les photographes
-            if (tag_selected.length == 0) {
-              resultat = photographes;
-            } else {
-              //Sinon on affiche que ceux ayant la spécialité du filtre
-              tag_selected.forEach((values) => {
-                photographes.filter((photographe) => {
-                  if (photographe.tags.indexOf(values.dataset.filter) != -1) {
-                    resultat.push(photographe);
-                  }
-                });
-              });
-            }
           } else {
             e.target.classList.add('selected_tag');
-            let tag_selected = document.querySelectorAll('.selected_tag');
-
-            tag_selected.forEach((select) => {
+          }
+          let tag_selected = document.querySelectorAll('.selected_tag');
+          //Si aucun tag n'est sélectionné, on affiche tous les photographes
+          if (tag_selected.length == 0) {
+            resultat = photographes;
+          } else {
+            //Sinon on affiche que ceux ayant la spécialité du filtre
+            tag_selected.forEach((values) => {
               photographes.filter((photographe) => {
-                if (photographe.tags.indexOf(select.dataset.filter) != -1) {
-                  resultat.push(photographe);
+                if (photographe.tags.indexOf(values.dataset.filter) != -1) {
+                  if (!resultat.includes(photographe)) {
+                    resultat.push(photographe);
+                  }
                 }
               });
             });
