@@ -17,12 +17,13 @@ window.addEventListener('load', () => {
 
       //Affichage des photographes en fonction du filtre sélectionné
       let photographes = data.photographers;
+      console.log(photographes);
       const tagsCheck = document.querySelectorAll('.tag_link');
       for (let i = 0; i < tagsCheck.length; i++) {
         tagsCheck[i].addEventListener('click', (e) => {
           //On récupère le nom du filtre sélectionné lors du clic
           e.target.dataset.filter;
-          // on remplace l'affichage des photographes en fonction du filtre sélectionné
+          // on vide la page des photographes pour la reconstuire en fonction des filtres sélectionnés
           document.querySelector('#photographe_container').innerHTML = '';
           // On déclare une variable égale à un tableau vide que l'on remplit en fonction des résultats obtenus aux clics.
           let resultat = [];
@@ -48,6 +49,7 @@ window.addEventListener('load', () => {
               });
             });
           }
+          //On reconstruit la page à chaque changement en fonction des tags selectionnés ou non au clic
           resultat.forEach((Elphoto) => {
             createPhotographe(Elphoto);
           });

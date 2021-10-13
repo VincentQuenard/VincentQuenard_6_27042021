@@ -1,6 +1,7 @@
 const linkToJson = './photographes.json';
 let element;
 let params = new URL(document.location).searchParams;
+let tableau_medias = [];
 let idURL = params.get('id');
 window.addEventListener('load', () => {
   fetch(linkToJson)
@@ -13,11 +14,9 @@ window.addEventListener('load', () => {
       // console.log(data);
       if (data.photographers != undefined)
         data.photographers.forEach((Elphoto) => {
-          //console.log(Elphoto);
           /* Si l'id contenu dans l'url est la même que celle du photgraphe, afficher banner du photographe */
           if (idURL == Elphoto.id) {
             banner_photographe(Elphoto);
-            //console.log(Elphoto);
 
             //MODAL
 
@@ -153,42 +152,24 @@ window.addEventListener('load', () => {
       data.media.forEach((Elmedia) => {
         //Si l'id contenu dans l'url == au photographeID du media)
         if (idURL == Elmedia.photographerId) {
-          //console.log(Elmedia.title);
-          // let trilikes = Elmedia.likes;
-          // console.log(trilikes);
-          media_photographe(Elmedia);
+          media_photographe_display(Elmedia);
           clickJaime(Elmedia);
           //lightbox_media(Elmedia);
-
-          // TEST TRI DROPDOWN
-
-          // tri par popularité, date ou titre
-          let tableau = [];
-          console.log(tableau);
-          console.log(Elmedia);
-          let tri = document.querySelector('select');
-          tri.addEventListener('change', function (e) {
-            e.target.value;
-            console.log(e.target.value);
-            if (e.target.value == 'popularite') {
-              tableau.sort((a, b) => (a.likes < b.likes ? 1 : -1));
-            } else if (e.target.value == 'date') {
-              tableau.sort((a, b) => (a.date < b.date ? 1 : -1));
-            } else if (e.target.value == 'titre') {
-              tableau.sort((a, b) => (a.title < b.title ? 1 : -1));
-            }
-          });
+          tableau_medias.push(Elmedia);
 
           //TEST LIGHTBOX CONFIG 1 tuto
           const bg_lightbox = document.querySelector('.lightbox_container');
-          const links = document.querySelectorAll('.media_photographe a');
+          const links = document.querySelectorAll('.media');
           //console.log(btn_lightbox);
           const close_lightbox = document.querySelector('.close_bigger');
+          const show = document.querySelector('.lightbox_media_box');
+
           // ouverture lighbox en cliquant sur un media
           links.forEach((link) =>
-            link.addEventListener('click', function (e) {
-              e.preventDefault;
+            link.addEventListener('click', function () {
               bg_lightbox.style.display = 'block';
+
+              // show.innerHTML = 'focus sur média cliqué et on injecte les autres médias que l'on cache'
             })
           );
 
@@ -200,15 +181,19 @@ window.addEventListener('load', () => {
           let medias_lightbox = document.createElement('div');
           medias_lightbox.classList.add('lightbox_media_box');
           document.querySelector('.lightbox').appendChild(medias_lightbox);
-          medias_lightbox.innerHTML = lightbox_choix_media(Elmedia);
+          //medias_lightbox.innerHTML = lightbox_choix_media(Elmedia);
           let title_photo = document.createElement('h2');
           title_photo.classList.add('titre_photo_lightbox');
           document.querySelector('.lightbox').appendChild(title_photo);
           title_photo.innerHTML = `${Elmedia.title}`;
 
-          /*let mediaActive = 0;
+          /*const display_media = document.querySelectorAll(
+            '.media_photographe img, .media_photographe video'
+          );
+          console.log(display_media);
+          let mediaActive = 0;
           for (let i = 1; i < display_media.length; i += 1) {
-            display_media.classList.add('hidden');
+            display_media[i].classList.add('hidden');
           }
           //clic flèche suivant
 
@@ -221,6 +206,26 @@ window.addEventListener('load', () => {
             });*/
         }
       });
+      let dropdown = document.querySelector('select');
+      dropdown.addEventListener('change', function (e) {
+        e.target.value;
+        //console.log(e.target.value == 'popularite');
+        document.querySelector('.medias_photographe').innerHTML = '';
+
+        if (e.target.value == 'popularite') {
+          tableau_medias.sort((a, b) => (a.likes < b.likes ? 1 : -1));
+        } else if (e.target.value == 'date') {
+          console.log(tableau_medias);
+          tableau_medias.sort((a, b) => (a.date > b.date ? 1 : -1));
+          console.log(tableau_medias);
+        } else if (e.target.value == 'titre') {
+          tableau_medias.sort((a, b) => (a.title > b.title ? 1 : -1));
+        }
+        tableau_medias.forEach((tab) => {
+          media_photographe_display(tab);
+        });
+      });
+
       totalLikes(data.media);
 
       //LE CLIC SUR UN FILTRE DOIT FILTRER INDEX.HTML EN AFFICHER PHOTOGRAPHES AYANT CE FILTRE
@@ -239,7 +244,9 @@ function createTag(elementTag) {
       '<span class="sr_only">Tag link</span>' +
       '<a class="tag_link photographe_page" data-filter="' +
       tag +
-      '" href="../index.html">#' +
+      '" href="../index.html?tag=' +
+      tag +
+      '">#' +
       tag +
       '</a>' +
       '</li>';
@@ -292,7 +299,7 @@ function banner_photographe(Elphoto) {
 }
 
 /*Fonction qui va créer les médias des photographes choix si video ou img dans le .json*/
-function media_photographe(Elmedia) {
+function media_photographe_display(Elmedia) {
   let media_photographe = document.createElement('div');
   media_photographe.classList.add('media_photographe');
   document.querySelector('.medias_photographe').appendChild(media_photographe);
@@ -321,27 +328,19 @@ function media_photographe(Elmedia) {
 function choix_media(Elmedia) {
   if (Elmedia.image) {
     return (
-      '<a href="' +
-      Elmedia.image +
-      '">' +
       '<img class="media" src="' +
       Elmedia.image +
       '" alt="' +
       Elmedia.alt +
-      '"img>' +
-      '</a>'
+      '"img>'
     );
   } else if (Elmedia.video) {
     return (
-      '<a href="' +
-      Elmedia.video +
-      '">' +
       '<video controls class="media">' +
       '<source src="' +
       Elmedia.video +
       '" type=video/mp4>' +
-      '</video> ' +
-      '</a>'
+      '</video> '
     );
   }
 }
@@ -365,9 +364,9 @@ function clickJaime(id) {
 }
 
 //fonction qui va faire la somme des likes et s'incrémenter s'il y a un clic sur un coeur
-function totalLikes(element) {
+function totalLikes(total) {
   let somme = 0;
-  element.forEach((aime) => {
+  total.forEach((aime) => {
     if (aime.photographerId == idURL) {
       somme += aime.likes;
     }
