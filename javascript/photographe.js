@@ -1,8 +1,12 @@
 const linkToJson = './photographes.json';
 let element;
-let params = new URL(document.location).searchParams;
+
 let tableau_medias = [];
+//récupération de l'url
+let params = new URL(document.location).searchParams;
+//récupération de l'id spécifique à chaque photographe
 let idURL = params.get('id');
+
 window.addEventListener('load', () => {
   fetch(linkToJson)
     .then(function (response) {
@@ -11,7 +15,7 @@ window.addEventListener('load', () => {
       }
     })
     .then(function (data) {
-      // console.log(data);
+      // partie du fech pour les informations du photographe à afficher dans la banière à partir du json
       if (data.photographers != undefined)
         data.photographers.forEach((Elphoto) => {
           /* Si l'id contenu dans l'url est la même que celle du photgraphe, afficher banner du photographe */
@@ -147,29 +151,34 @@ window.addEventListener('load', () => {
           }
         });
 
+      //Partie du fetch pour l'affichage et les actions sur la partie média des photographes
       if (data.media != undefined) element = data.media;
 
       data.media.forEach((Elmedia) => {
         //Si l'id contenu dans l'url == au photographeID du media)
         if (idURL == Elmedia.photographerId) {
+          //Affichage des médias propres à chaque photographe
           media_photographe_display(Elmedia);
+          //Incrémentation des likes au click
           clickJaime(Elmedia);
           //lightbox_media(Elmedia);
+          //réorganisation de l'affichage des médias en fonction du menu déroulant
           tableau_medias.push(Elmedia);
 
-          //TEST LIGHTBOX CONFIG 1 tuto
+          //TEST LIGHTBOX
           const bg_lightbox = document.querySelector('.lightbox_container');
-          const links = document.querySelectorAll('.media');
-          //console.log(btn_lightbox);
           const close_lightbox = document.querySelector('.close_bigger');
-          const show = document.querySelector('.lightbox_media_box');
+          const links = document.querySelectorAll(
+            '.media_photographe img, .media_photographe video '
+          );
+
+          const medias_lightbox = document.querySelector('.lightbox_media');
 
           // ouverture lighbox en cliquant sur un media
           links.forEach((link) =>
             link.addEventListener('click', function () {
+              console.log(link);
               bg_lightbox.style.display = 'block';
-
-              // show.innerHTML = 'focus sur média cliqué et on injecte les autres médias que l'on cache'
             })
           );
 
@@ -177,15 +186,6 @@ window.addEventListener('load', () => {
           close_lightbox.addEventListener('click', () => {
             bg_lightbox.style.display = 'none';
           });
-
-          let medias_lightbox = document.createElement('div');
-          medias_lightbox.classList.add('lightbox_media_box');
-          document.querySelector('.lightbox').appendChild(medias_lightbox);
-          //medias_lightbox.innerHTML = lightbox_choix_media(Elmedia);
-          let title_photo = document.createElement('h2');
-          title_photo.classList.add('titre_photo_lightbox');
-          document.querySelector('.lightbox').appendChild(title_photo);
-          title_photo.innerHTML = `${Elmedia.title}`;
 
           /*const display_media = document.querySelectorAll(
             '.media_photographe img, .media_photographe video'
@@ -204,8 +204,15 @@ window.addEventListener('load', () => {
               mediaActive += 1;
               display_media[mediaActive].classList.remove('.hidden');
             });*/
+
+          /*<div class="lightbox_media_box">
+               <img class="lightbox_media" src="./images/MimiID243/Event_PintoWedding.jpg" alt="Recup via js">
+                <h2 class="titre_photo_lightbox">photo test mise en page</h2>
+            </div>*/
         }
       });
+
+      //On écoute au changement de filtre dropdown le choix et on réaffiche les médias en fonction du résultat de popularité, date ou titre
       let dropdown = document.querySelector('select');
       dropdown.addEventListener('change', function (e) {
         e.target.value;
@@ -227,8 +234,6 @@ window.addEventListener('load', () => {
       });
 
       totalLikes(data.media);
-
-      //LE CLIC SUR UN FILTRE DOIT FILTRER INDEX.HTML EN AFFICHER PHOTOGRAPHES AYANT CE FILTRE
     })
     .catch(function (err) {
       console.log('Erreur' + err);
@@ -328,11 +333,47 @@ function media_photographe_display(Elmedia) {
 function choix_media(Elmedia) {
   if (Elmedia.image) {
     return (
+      /*'<a aria-label="' +
+      Elmedia.alt +
+      '" href="' +
+      Elmedia.image +
+      '">' +*/
       '<img class="media" src="' +
       Elmedia.image +
       '" alt="' +
       Elmedia.alt +
-      '"img>'
+      '"img>' /*+
+      '</a>'*/
+    );
+  } else if (Elmedia.video) {
+    return (
+      /*'<a aria-label="' +
+      Elmedia.alt +
+      '" href="' +
+      Elmedia.image +
+      '">' +*/
+      '<video controls class="media">' +
+      '<source src="' +
+      Elmedia.video +
+      '" type=video/mp4>' +
+      '</video> ' /*+
+      '</a>'*/
+    );
+  }
+}
+
+// Fonction qui affiche soit video ou soit photo en fonction du media json dans la lightbox
+function bigMediaLightbox(Elmedia) {
+  if (Elmedia.image) {
+    return (
+      '<img class="media" src="' +
+      Elmedia.image +
+      '" alt="' +
+      Elmedia.alt +
+      '"img>' +
+      '<h2 class="titre_photo_lightbox">' +
+      Elmedia.title +
+      '</h2>'
     );
   } else if (Elmedia.video) {
     return (
@@ -340,7 +381,10 @@ function choix_media(Elmedia) {
       '<source src="' +
       Elmedia.video +
       '" type=video/mp4>' +
-      '</video> '
+      '</video> ' +
+      '<h2 class="titre_photo_lightbox">' +
+      Elmedia.title +
+      '</h2>'
     );
   }
 }
@@ -354,7 +398,9 @@ total_likes.innerHTML = '<p id="total_likes">';
 
 //Fonction qui va incrémenter le nombre de likes au clic sur les coeurs
 function clickJaime(id) {
+  // console.log(id);
   element.forEach((addLike) => {
+    //console.log(addLike);
     if (addLike.id == id) {
       addLike.likes += 1;
       document.getElementById(id).innerHTML = addLike.likes;
@@ -374,72 +420,3 @@ function totalLikes(total) {
   document.getElementById('total_likes').innerHTML =
     somme + '<i class="far fa-heart total"></i>';
 }
-
-// Fonction qui va afficher les medias dans la lightbox
-//function lightbox_media(Elmedia) {
-// console.log(Elmedia);
-
-//fonction appelée dans lightbox_media pour affichage si img ou video dans json
-function lightbox_choix_media(Elmedia) {
-  if (Elmedia.image) {
-    return '<img  src="' + Elmedia.image + '" alt="' + Elmedia.alt + '">';
-  } else if (Elmedia.video) {
-    return (
-      '<video controls >' +
-      '<source src="' +
-      Elmedia.video +
-      '" type=video/mp4>' +
-      '</video>'
-    );
-  }
-}
-
-/*let selection = document.querySelector('.dropdown');
-console.log(selection);*/
-
-/*Les objets peuvent être triés d'après les valeurs d'une de leurs propriétés.
-
-var items = [
-  { name: "Edward", value: 21 },
-  { name: "Sharpe", value: 37 },
-  { name: "And", value: 45 },
-  { name: "The", value: -12 },
-  { name: "Magnetic", value: 13 },
-  { name: "Zeros", value: 37 }
-];
-items.sort(function (a, b) {
-  return a.value - b.value;
-});*/
-
-/*          
-            <!--insertion des médias du photographe en JS-->
-
-               <div class="media_photographe">
-                <img class="media" src="./images/MimiID243/Animals_Rainbow.jpg" alt="Animals Rainbow">
-                <div class="media_texte">
-                    <p class="media_title">Animals Rainbow</p>
-                    <div class="media_heart" aria-label="likes">
-                        <p class="nb_likes">59</p>
-                        <div class="coeur">
-                            <i class="far fa-heart"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="media_photographe">
-                <video controls class="media">
-                    <source src="./images/MimiID243/Animals_Wild_Horses_in_the_mountains.mp4" type=video/mp4>
-                </video> 
-                <div class="media_texte">
-                    <p class="media_title">Wild_Horses</p>
-                    <div class="media_heart" aria-label="likes">
-                        <p class="nb_likes">142</p>
-                        <div class="coeur">
-                            <i class="far fa-heart"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-           */

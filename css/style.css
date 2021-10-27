@@ -15,6 +15,7 @@ body {
   max-width: 1600px;
   margin: 0 auto;
   padding: 3rem 5rem;
+  cursor: pointer;
 }
 
 @media (max-width: 600px) {
@@ -279,6 +280,7 @@ h1 {
   display: block;
   font-size: 1.25rem;
   font-weight: 700;
+  cursor: pointer;
 }
 
 .banner_photographe_button:hover {
@@ -482,6 +484,7 @@ h1 {
   border: none;
   border-radius: 0.31rem;
   color: white;
+  cursor: pointer;
 }
 
 .background_modal {

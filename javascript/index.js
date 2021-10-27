@@ -1,5 +1,13 @@
-/* Constante qui récupère les données de photopgraphes.json */
+//Constante qui récupère les données de photopgraphes.json
 const linkToJson = './photographes.json';
+
+//Constante qui sélectionne les filtres
+const tagsCheck = document.querySelectorAll('.tag_link');
+//récupération de l'url
+let params = new URL(document.location).searchParams;
+//récupération du tag contenu dans l'url
+let tagUrl = params.get('tag');
+console.log(tagUrl);
 
 /*fetch va faire une requête au fichier json si ok alors .then et exécution de la fonction, sinon erreur .catch*/
 window.addEventListener('load', () => {
@@ -17,8 +25,7 @@ window.addEventListener('load', () => {
 
       //Affichage des photographes en fonction du filtre sélectionné
       let photographes = data.photographers;
-      console.log(photographes);
-      const tagsCheck = document.querySelectorAll('.tag_link');
+
       for (let i = 0; i < tagsCheck.length; i++) {
         tagsCheck[i].addEventListener('click', (e) => {
           //On récupère le nom du filtre sélectionné lors du clic
@@ -42,6 +49,7 @@ window.addEventListener('load', () => {
             tag_selected.forEach((values) => {
               photographes.filter((photographe) => {
                 if (photographe.tags.indexOf(values.dataset.filter) != -1) {
+                  // console.log(values.dataset.filter);
                   if (!resultat.includes(photographe)) {
                     resultat.push(photographe);
                   }
@@ -49,10 +57,23 @@ window.addEventListener('load', () => {
               });
             });
           }
-          //On reconstruit la page à chaque changement en fonction des tags selectionnés ou non au clic
+          //On affiche chaque photographe ayant le filtre cliqué
           resultat.forEach((Elphoto) => {
             createPhotographe(Elphoto);
           });
+        });
+      }
+      //Filtre de la page index en fonction du tag sélectionné sur la page photographe
+      if (tagUrl != null) {
+        document.querySelector('#photographe_container').innerHTML = '';
+        let resultat = [];
+        photographes.filter((photographe) => {
+          if (photographe.tags.indexOf(tagUrl) != -1) {
+            resultat.push(photographe);
+          }
+        });
+        resultat.forEach((Elphoto) => {
+          createPhotographe(Elphoto);
         });
       }
     })
