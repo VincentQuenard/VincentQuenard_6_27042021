@@ -171,17 +171,33 @@ window.addEventListener('load', () => {
           const links = document.querySelectorAll(
             '.media_photographe img, .media_photographe video '
           );
+          const display_media = document.querySelectorAll(
+            '.lightbox_media_box'
+          );
 
-          const medias_lightbox = document.querySelector('.lightbox_media');
+          let medias_lightbox = document.createElement('div');
+          medias_lightbox.classList.add('lightbox_media_box');
+          document.querySelector('.lightbox').appendChild(medias_lightbox);
+          medias_lightbox.innerHTML = bigMediaLightbox(Elmedia);
 
           // ouverture lighbox en cliquant sur un media
           links.forEach((link) =>
             link.addEventListener('click', function () {
-              console.log(link);
+              //console.log(link);
               bg_lightbox.style.display = 'block';
             })
           );
-
+          let mediaActive = 0;
+          for (let i = 1; i < display_media.length; i += 1) {
+            display_media[i].classList.add('hidden');
+          }
+          document
+            .querySelector('.arrow_right')
+            .addEventListener('click', function () {
+              display_media[mediaActive].classList.add('hidden');
+              mediaActive += 1;
+              display_media[mediaActive].classList.remove('hidden');
+            });
           // fermeture lightbox au clic sur la croix
           close_lightbox.addEventListener('click', () => {
             bg_lightbox.style.display = 'none';
