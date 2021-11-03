@@ -1,6 +1,6 @@
 const linkToJson = './photographes.json';
 let element;
-let currentIndex = '';
+let mediaActive = '';
 let tableau_medias = [];
 //récupération de l'url
 let params = new URL(document.location).searchParams;
@@ -165,8 +165,67 @@ window.addEventListener('load', () => {
           //réorganisation de l'affichage des médias en fonction du menu déroulant
           tableau_medias.push(Elmedia);
 
-          //TEST LIGHTBOX
+          //LIGHTBOX
+
           const bg_lightbox = document.querySelector('.lightbox_container');
+          const close_lightbox = document.querySelector('.close_bigger');
+          const links = document.querySelectorAll(
+            '.media_photographe img, .media_photographe video '
+          );
+
+          /*let medias_lightbox = document.createElement('div');
+          medias_lightbox.classList.add('lightbox_media_box' , 'hidden');*/
+
+          // document.querySelector('.lightbox').appendChild(medias_lightbox);
+          // medias_lightbox.innerHTML = bigMediaLightbox(Elmedia);
+          const display_media = document.querySelector('.lightbox_media_box');
+          // ouverture lighbox en cliquant sur un media
+          links.forEach((link, index) => {
+            link.addEventListener('click', function () {
+              console.log(link);
+              // console.log(index);
+              mediaActive = index;
+              console.log(mediaActive);
+              display_media.innerHTML = bigMediaLightbox(Elmedia);
+              console.log(Elmedia);
+              bg_lightbox.style.display = 'block';
+
+              // display_media[index].classList.remove('hidden');
+            });
+          });
+
+          //clic flèche suivant
+          /* document
+            .querySelector('.arrow_right')
+            .addEventListener('click', function () {
+              //console.log(display_media);
+              if (display_media[mediaActive] != undefined) {
+                display_media[mediaActive].classList.add('hidden');
+              }
+              mediaActive += 1;
+              if (display_media[mediaActive] != undefined) {
+                display_media[mediaActive].classList.remove('hidden');
+              }
+            });*/
+
+          //clic flèche précédente
+          /* document
+            .querySelector('.arrow_left')
+            .addEventListener('click', function () {
+              display_media[mediaActive].classList.add('hidden');
+              mediaActive -= 1;
+              display_media[mediaActive].classList.remove('hidden');
+            });*/
+          // fermeture lightbox au clic sur la croix et on cache le dernier média affiché
+          close_lightbox.addEventListener('click', () => {
+            /* if (display_media[mediaActive] != undefined) {
+              display_media[mediaActive].classList.add('hidden');
+            }*/
+            bg_lightbox.style.display = 'none';
+          });
+
+          //Idée lightbox 2
+          /*const bg_lightbox = document.querySelector('.lightbox_container');
           const close_lightbox = document.querySelector('.close_bigger');
           const links = document.querySelectorAll(
             '.media_photographe img, .media_photographe video '
@@ -174,64 +233,47 @@ window.addEventListener('load', () => {
           const display_media = document.querySelectorAll(
             '.lightbox_media_box'
           );
-
           let medias_lightbox = document.createElement('div');
           medias_lightbox.classList.add('lightbox_media_box');
-          medias_lightbox.classList.add('hidden');
+
           document.querySelector('.lightbox').appendChild(medias_lightbox);
           medias_lightbox.innerHTML = bigMediaLightbox(Elmedia);
 
           // ouverture lighbox en cliquant sur un media
-          links.forEach((link, index) =>
-            link.addEventListener('click', function () {
-              console.log(link);
-              currentIndex = index;
-              bg_lightbox.style.display = 'block';
-              display_media[index].classList.remove('hidden');
-            })
-          );
+          links.forEach((link) => {
+            console.log(link);
 
-          /* let mediaActive = 0;
+            link.addEventListener('click', function () {
+            
+              bg_lightbox.style.display = 'block';
+
+              // display_media[index].classList.remove('hidden');
+            });
+          });
+          let mediaActive = 0;
           for (let i = 1; i < display_media.length; i += 1) {
             display_media[i].classList.add('hidden');
           }
-
-          //clic flèche suivant
           document
             .querySelector('.arrow_right')
             .addEventListener('click', function () {
               display_media[mediaActive].classList.add('hidden');
               mediaActive += 1;
               display_media[mediaActive].classList.remove('hidden');
-            });*/
-          // fermeture lightbox au clic sur la croix
-          close_lightbox.addEventListener('click', () => {
-            display_media[currentIndex].classList.add('hidden');
-            bg_lightbox.style.display = 'none';
-          });
+            });
 
-          /*const display_media = document.querySelectorAll(
-            '.media_photographe img, .media_photographe video'
-          );
-          console.log(display_media);
-          let mediaActive = 0;
-          for (let i = 1; i < display_media.length; i += 1) {
-            display_media[i].classList.add('hidden');
-          }
-          
-
-          document
-            .querySelector('.arrow_right')
+          //clic flèche précédente
+          /* document
+            .querySelector('.arrow_left')
             .addEventListener('click', function () {
-              display_media[mediaActive].classList.add('.hidden');
-              mediaActive += 1;
-              display_media[mediaActive].classList.remove('.hidden');
-            });*/
-
-          /*<div class="lightbox_media_box">
-               <img class="lightbox_media" src="./images/MimiID243/Event_PintoWedding.jpg" alt="Recup via js">
-                <h2 class="titre_photo_lightbox">photo test mise en page</h2>
-            </div>*/
+              display_media[mediaActive].classList.add('hidden');
+              mediaActive -= 1;
+              display_media[mediaActive].classList.remove('hidden');
+            });
+          // fermeture lightbox au clic sur la croix et on cache le dernier média affiché
+          close_lightbox.addEventListener('click', () => {
+            bg_lightbox.style.display = 'none';
+          });*/
         }
       });
 
@@ -356,31 +398,19 @@ function media_photographe_display(Elmedia) {
 function choix_media(Elmedia) {
   if (Elmedia.image) {
     return (
-      /*'<a aria-label="' +
-      Elmedia.alt +
-      '" href="' +
-      Elmedia.image +
-      '">' +*/
       '<img class="media" src="' +
       Elmedia.image +
       '" alt="' +
       Elmedia.alt +
-      '"img>' /*+
-      '</a>'*/
+      '"img>'
     );
   } else if (Elmedia.video) {
     return (
-      /*'<a aria-label="' +
-      Elmedia.alt +
-      '" href="' +
-      Elmedia.image +
-      '">' +*/
       '<video controls class="media">' +
       '<source src="' +
       Elmedia.video +
       '" type=video/mp4>' +
-      '</video> ' /*+
-      '</a>'*/
+      '</video> '
     );
   }
 }
