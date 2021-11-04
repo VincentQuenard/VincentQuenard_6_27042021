@@ -16,7 +16,7 @@ window.addEventListener('load', () => {
     })
     .then(function (data) {
       //On recupère dans la constante les médias propres au photographe
-      let photographeMedias = data.media.filter((media) => {
+      let photographerMedias = data.media.filter((media) => {
         return idURL == media.photographerId;
       });
       // partie du fech pour les informations du photographe à afficher dans la banière à partir du json
@@ -180,46 +180,44 @@ window.addEventListener('load', () => {
       );
       const lightboxMediaBox = document.querySelector('.lightbox_media_box');
       //On injecte la fonction qui définira si photo ou video
-      const affichageLightbox = (currentMedia) => {
+      function affichageLightbox(currentMedia) {
         lightboxMediaBox.innerHTML = bigMediaLightbox(currentMedia);
-      };
+      }
 
       // ouverture lighbox en cliquant sur un media et affichage de ce média
       links.forEach((link, index) => {
         link.addEventListener('click', () => {
           mediaActive = index;
           bg_lightbox.style.display = 'block';
-          affichageLightbox(photographeMedias[mediaActive]);
+          affichageLightbox(photographerMedias[mediaActive]);
         });
       });
 
       //clic flèche suivant
-      /* document
-            .querySelector('.arrow_right')
-            .addEventListener('click', function () {
-              //console.log(display_media);
-              if (display_media[mediaActive] != undefined) {
-                display_media[mediaActive].classList.add('hidden');
-              }
-              mediaActive += 1;
-              if (display_media[mediaActive] != undefined) {
-                display_media[mediaActive].classList.remove('hidden');
-              }
-            });*/
+      document
+        .querySelector('.arrow_right')
+        .addEventListener('click', function () {
+          mediaActive++;
+          if (mediaActive === photographerMedias.length) {
+            mediaActive = 0;
+          }
+          affichageLightbox(photographerMedias[mediaActive]);
+        });
 
       //clic flèche précédente
-      /* document
-            .querySelector('.arrow_left')
-            .addEventListener('click', function () {
-              display_media[mediaActive].classList.add('hidden');
-              mediaActive -= 1;
-              display_media[mediaActive].classList.remove('hidden');
-            });*/
+      document
+        .querySelector('.arrow_left')
+        .addEventListener('click', function (e) {
+          e.preventDefault;
+          mediaActive--;
+          if (mediaActive < 0) {
+            mediaActive == photographerMedias.length - 1;
+          }
+          affichageLightbox(photographerMedias[mediaActive - 1]);
+        });
+
       // fermeture lightbox au clic sur la croix et on cache le dernier média affiché
       close_lightbox.addEventListener('click', () => {
-        /* if (display_media[mediaActive] != undefined) {
-              display_media[mediaActive].classList.add('hidden');
-            }*/
         bg_lightbox.style.display = 'none';
       });
 
@@ -227,7 +225,7 @@ window.addEventListener('load', () => {
       let dropdown = document.querySelector('select');
       dropdown.addEventListener('change', function (e) {
         e.target.value;
-        //console.log(e.target.value == 'popularite');
+
         document.querySelector('.medias_photographe').innerHTML = '';
 
         if (e.target.value == 'popularite') {
@@ -352,9 +350,11 @@ function choix_media(Elmedia) {
     );
   } else if (Elmedia.video) {
     return (
-      '<video controls class="media">' +
+      '<video class="media">' +
       '<source src="' +
       Elmedia.video +
+      '" alt="' +
+      Elmedia.alt +
       '" type=video/mp4>' +
       '</video> '
     );
@@ -376,11 +376,12 @@ function bigMediaLightbox(Elmedia) {
     );
   } else if (Elmedia.video) {
     return (
-      '<video controls class="media">' +
+      '<video autoplay loop class="media">' +
       '<source src="' +
       Elmedia.video +
+      '" alt="' +
+      Elmedia.alt +
       '" type=video/mp4>' +
-      '</video> ' +
       '<h2 class="titre_photo_lightbox">' +
       Elmedia.title +
       '</h2>'
