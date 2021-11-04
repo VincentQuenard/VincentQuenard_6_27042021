@@ -85,3 +85,25 @@
 .hidden {
   display: none;
 }
+
+@media (max-width: 650px) {
+  .close_lightbox {
+    right: 6%;
+    top: 8%;
+  }
+
+  .arrow_left {
+    left: 6%;
+    top: 50%;
+  }
+
+  .arrow_right {
+    right: 6%;
+    top: 50%;
+  }
+
+  .fa-chevron-right,
+  .fa-chevron-left {
+    font-size: 2.5rem;
+  }
+}
