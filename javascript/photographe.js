@@ -1,7 +1,7 @@
 const linkToJson = './photographes.json';
 let element;
 let mediaActive = '';
-let tableau_medias = [];
+
 //récupération de l'url
 let params = new URL(document.location).searchParams;
 //récupération de l'id spécifique à chaque photographe
@@ -19,6 +19,7 @@ window.addEventListener('load', () => {
       let photographerMedias = data.media.filter((media) => {
         return idURL == media.photographerId;
       });
+      console.log(photographerMedias);
       // partie du fech pour les informations du photographe à afficher dans la banière à partir du json
       if (data.photographers != undefined)
         data.photographers.forEach((Elphoto) => {
@@ -65,6 +66,12 @@ window.addEventListener('load', () => {
             // fermeture formulaire au clic sur la croix
             buttonClose.addEventListener('click', () => {
               modalbg.style.display = 'none';
+            });
+            // fermeture formulaire au clavier en appuyant sur échap
+            window.addEventListener('keydown', function (e) {
+              if (e.key == 'Escape') {
+                modalbg.style.display = 'none';
+              }
             });
 
             //Vérifications entrées formulaire
@@ -165,9 +172,6 @@ window.addEventListener('load', () => {
           media_photographe_display(Elmedia);
           //Incrémentation des likes au click
           clickJaime(Elmedia);
-          //lightbox_media(Elmedia);
-          //réorganisation de l'affichage des médias en fonction du menu déroulant
-          tableau_medias.push(Elmedia);
         }
       });
 
@@ -185,59 +189,90 @@ window.addEventListener('load', () => {
       }
 
       // ouverture lighbox en cliquant sur un media et affichage de ce média
-      links.forEach((link, index) => {
-        link.addEventListener('click', () => {
-          mediaActive = index;
-          bg_lightbox.style.display = 'block';
-          affichageLightbox(photographerMedias[mediaActive]);
+      function openLightbox() {
+        links.forEach((link, index) => {
+          link.addEventListener('click', () => {
+            mediaActive = index;
+            bg_lightbox.style.display = 'block';
+            affichageLightbox(photographerMedias[mediaActive]);
+          });
         });
-      });
+      }
+      openLightbox();
 
       //clic flèche suivant
+      const arrowRight = function () {
+        console.log(mediaActive);
+        mediaActive++;
+        if (mediaActive === photographerMedias.length) {
+          mediaActive = 0;
+        }
+        affichageLightbox(photographerMedias[mediaActive]);
+      };
       document
         .querySelector('.arrow_right')
         .addEventListener('click', function () {
-          mediaActive++;
-          if (mediaActive === photographerMedias.length) {
-            mediaActive = 0;
-          }
-          affichageLightbox(photographerMedias[mediaActive]);
+          arrowRight();
         });
 
       //clic flèche précédente
+      const arrowLeft = function () {
+        console.log(mediaActive);
+        console.log(photographerMedias.length);
+        mediaActive--;
+        if (mediaActive < 0) {
+          mediaActive == photographerMedias.length;
+        }
+        affichageLightbox(photographerMedias[mediaActive]);
+      };
       document
         .querySelector('.arrow_left')
-        .addEventListener('click', function (e) {
-          e.preventDefault;
-          mediaActive--;
-          if (mediaActive < 0) {
-            mediaActive == photographerMedias.length - 1;
-          }
-          affichageLightbox(photographerMedias[mediaActive - 1]);
+        .addEventListener('click', function () {
+          arrowLeft();
         });
 
       // fermeture lightbox au clic sur la croix et on cache le dernier média affiché
-      close_lightbox.addEventListener('click', () => {
-        bg_lightbox.style.display = 'none';
+      function CloseLightbox() {
+        close_lightbox.addEventListener('click', () => {
+          bg_lightbox.style.display = 'none';
+        });
+      }
+      CloseLightbox();
+
+      //navigation au clavier, fleches gauche et droite, touche échap pour sortir
+      window.addEventListener('keydown', function (e) {
+        console.log(e);
+        if (e.key == 'ArrowRight') {
+          arrowRight();
+        }
+        if (e.key == 'ArrowLeft') {
+          arrowLeft();
+        }
+        if (e.key == 'Escape') {
+          bg_lightbox.style.display = 'none';
+        }
       });
+
+      //Filtre dropdow
 
       //On écoute au changement de filtre dropdown le choix et on réaffiche les médias en fonction du résultat de popularité, date ou titre
       let dropdown = document.querySelector('select');
+      let containerMedias = document.querySelector('.medias_photographe');
       dropdown.addEventListener('change', function (e) {
         e.target.value;
 
-        document.querySelector('.medias_photographe').innerHTML = '';
+        containerMedias.innerHTML = '';
 
         if (e.target.value == 'popularite') {
-          tableau_medias.sort((a, b) => (a.likes < b.likes ? 1 : -1));
+          photographerMedias.sort((a, b) => (a.likes < b.likes ? 1 : -1));
         } else if (e.target.value == 'date') {
-          console.log(tableau_medias);
-          tableau_medias.sort((a, b) => (a.date > b.date ? 1 : -1));
-          console.log(tableau_medias);
+          console.log(photographerMedias);
+          photographerMedias.sort((a, b) => (a.date > b.date ? 1 : -1));
+          console.log(photographerMedias);
         } else if (e.target.value == 'titre') {
-          tableau_medias.sort((a, b) => (a.title > b.title ? 1 : -1));
+          photographerMedias.sort((a, b) => (a.title > b.title ? 1 : -1));
         }
-        tableau_medias.forEach((tab) => {
+        photographerMedias.forEach((tab) => {
           media_photographe_display(tab);
         });
       });
@@ -314,6 +349,7 @@ function banner_photographe(Elphoto) {
 
 /*Fonction qui va créer les médias des photographes choix si video ou img dans le .json*/
 function media_photographe_display(Elmedia) {
+  // console.log(Elmedia.title);
   let media_photographe = document.createElement('div');
   media_photographe.classList.add('media_photographe');
   document.querySelector('.medias_photographe').appendChild(media_photographe);
@@ -382,6 +418,7 @@ function bigMediaLightbox(Elmedia) {
       '" alt="' +
       Elmedia.alt +
       '" type=video/mp4>' +
+      '</video> ' +
       '<h2 class="titre_photo_lightbox">' +
       Elmedia.title +
       '</h2>'

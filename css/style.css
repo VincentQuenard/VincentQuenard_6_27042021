@@ -104,12 +104,12 @@ a.tag_link {
   padding: 0.3rem 0.5rem;
   margin: 1rem 0.2rem 0 0.2rem;
   transition: all 0.5s ease-in-out;
-  /* &:hover {
-    color: $couleur_blanche;
-    background-color: $couleur_primaire;
-  }*/
 }
 a.tag_link.selected_tag {
+  color: white;
+  background-color: #901c1c;
+}
+a.tag_link:hover {
   color: white;
   background-color: #901c1c;
 }
@@ -390,6 +390,10 @@ h1 {
 
 .media_photographe {
   margin: 3rem;
+}
+.media_photographe:hover {
+  transition: all 0.5s ease-in-out;
+  transform: scale(1.05);
 }
 
 @media (max-width: 1300px) {

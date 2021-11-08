@@ -7,7 +7,6 @@ const tagsCheck = document.querySelectorAll('.tag_link');
 let params = new URL(document.location).searchParams;
 //récupération du tag contenu dans l'url
 let tagUrl = params.get('tag');
-console.log(tagUrl);
 
 /*fetch va faire une requête au fichier json si ok alors .then et exécution de la fonction, sinon erreur .catch*/
 window.addEventListener('load', () => {
