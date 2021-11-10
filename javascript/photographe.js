@@ -2,15 +2,7 @@ const linkToJson = './photographes.json';
 let element;
 let tableau_medias = [];
 let mediaActive = '';
-const bg_lightbox = document.querySelector('.lightbox_container');
-const close_lightbox = document.querySelector('.close_bigger');
-const links = document.querySelectorAll('.media');
-const lightboxMediaBox = document.querySelector('.lightbox_media_box');
-//On injecte la fonction qui définira si photo ou video
-function affichageLightbox(currentMedia) {
-  lightboxMediaBox.innerHTML = bigMediaLightbox(currentMedia);
-}
-console.log(links);
+
 //récupération de l'url
 let params = new URL(document.location).searchParams;
 //récupération de l'id spécifique à chaque photographe
@@ -188,6 +180,15 @@ window.addEventListener('load', () => {
 
       //LIGHTBOX
 
+      const bg_lightbox = document.querySelector('.lightbox_container');
+      const close_lightbox = document.querySelector('.close_bigger');
+      const links = document.querySelectorAll('.media');
+      const lightboxMediaBox = document.querySelector('.lightbox_media_box');
+      //On injecte la fonction qui définira si photo ou video
+      function affichageLightbox(currentMedia) {
+        lightboxMediaBox.innerHTML = bigMediaLightbox(currentMedia);
+      }
+      console.log(links);
       // ouverture lighbox en cliquant sur un media et affichage de ce média
       function openLightbox() {
         links.forEach((link, index) => {
