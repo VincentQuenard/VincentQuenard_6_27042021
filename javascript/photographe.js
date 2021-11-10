@@ -3,6 +3,11 @@ let element;
 let tableau_medias = [];
 let mediaActive = '';
 
+//LIGHTBOX
+const bg_lightbox = document.querySelector('.lightbox_container');
+const close_lightbox = document.querySelector('.close_bigger');
+const lightboxMediaBox = document.querySelector('.lightbox_media_box');
+
 //récupération de l'url
 let params = new URL(document.location).searchParams;
 //récupération de l'id spécifique à chaque photographe
@@ -17,9 +22,9 @@ window.addEventListener('load', () => {
     })
     .then(function (data) {
       //On recupère dans la constante les médias propres au photographe
-      let photographerMedias = data.media.filter((media) => {
+      /* let photographerMedias = data.media.filter((media) => {
         return idURL == media.photographerId;
-      });
+      });*/
 
       // partie du fech pour les informations du photographe à afficher dans la banière à partir du json
       if (data.photographers != undefined)
@@ -177,82 +182,7 @@ window.addEventListener('load', () => {
         }
       });
       totalLikes(data.media);
-
-      //LIGHTBOX
-
-      const bg_lightbox = document.querySelector('.lightbox_container');
-      const close_lightbox = document.querySelector('.close_bigger');
-      const links = document.querySelectorAll('.media');
-      const lightboxMediaBox = document.querySelector('.lightbox_media_box');
-      //On injecte la fonction qui définira si photo ou video
-      function affichageLightbox(currentMedia) {
-        lightboxMediaBox.innerHTML = bigMediaLightbox(currentMedia);
-      }
-      console.log(links);
-      // ouverture lighbox en cliquant sur un media et affichage de ce média
-      function openLightbox() {
-        links.forEach((link, index) => {
-          link.addEventListener('click', () => {
-            mediaActive = index;
-            bg_lightbox.style.display = 'block';
-            affichageLightbox(photographerMedias[mediaActive]);
-          });
-        });
-      }
       openLightbox();
-
-      //clic flèche suivant
-      const arrowRight = function () {
-        console.log(mediaActive);
-        mediaActive++;
-        if (mediaActive === photographerMedias.length) {
-          mediaActive = 0;
-        }
-        affichageLightbox(photographerMedias[mediaActive]);
-      };
-      document
-        .querySelector('.arrow_right')
-        .addEventListener('click', function () {
-          arrowRight();
-        });
-
-      //clic flèche précédente
-      const arrowLeft = function () {
-        console.log(mediaActive);
-        console.log(photographerMedias.length);
-        mediaActive--;
-        if (mediaActive < 0) {
-          mediaActive == photographerMedias.length;
-        }
-        affichageLightbox(photographerMedias[mediaActive]);
-      };
-      document
-        .querySelector('.arrow_left')
-        .addEventListener('click', function () {
-          arrowLeft();
-        });
-
-      // fermeture lightbox au clic sur la croix et on cache le dernier média affiché
-      function CloseLightbox() {
-        close_lightbox.addEventListener('click', () => {
-          bg_lightbox.style.display = 'none';
-        });
-      }
-      CloseLightbox();
-
-      //navigation au clavier, fleches gauche et droite, touche échap pour sortir
-      window.addEventListener('keydown', function (e) {
-        console.log(e);
-        if (e.key == 'ArrowRight') {
-          arrowRight();
-        }
-        if (e.key == 'ArrowLeft') {
-          arrowLeft();
-        }
-        if (e.key == 'Escape') {
-          bg_lightbox.style.display = 'none';
-        }
-      });
     })
     .catch(function (err) {
       console.log('Erreur' + err);
@@ -347,14 +277,73 @@ function media_photographe_display(Elmedia) {
     '</div>' +
     '</div>' +
     '</div>';
-  /*media_photographe.addEventListener('click', () => {
-    const bg_lightbox = document.querySelector('.lightbox_container');
-
-    const lightboxMediaBox = document.querySelector('.lightbox_media_box');
-    lightboxMediaBox.innerHTML = bigMediaLightbox(Elmedia);
-    bg_lightbox.style.display = 'block';
-  });*/
 }
+
+// LIGHTOX
+// ouverture lighbox en cliquant sur un media et affichage de ce média
+function openLightbox() {
+  const links = document.querySelectorAll('.media');
+  links.forEach((link, index) => {
+    link.addEventListener('click', () => {
+      mediaActive = index;
+      bg_lightbox.style.display = 'block';
+      affichageLightbox(tableau_medias[mediaActive]);
+    });
+  });
+}
+
+//On injecte la fonction qui définira si photo ou video
+function affichageLightbox(currentMedia) {
+  lightboxMediaBox.innerHTML = bigMediaLightbox(currentMedia);
+}
+//clic flèche suivant
+const arrowRight = function () {
+  console.log(mediaActive);
+  mediaActive++;
+  if (mediaActive === tableau_medias.length) {
+    mediaActive = 0;
+  }
+  affichageLightbox(tableau_medias[mediaActive]);
+};
+document.querySelector('.arrow_right').addEventListener('click', function () {
+  arrowRight();
+});
+
+//clic flèche précédente
+const arrowLeft = function () {
+  console.log(mediaActive);
+  console.log(tableau_medias.length);
+  mediaActive--;
+  if (mediaActive < 0) {
+    mediaActive == tableau_medias.length;
+  }
+  affichageLightbox(tableau_medias[mediaActive]);
+};
+document.querySelector('.arrow_left').addEventListener('click', function () {
+  arrowLeft();
+});
+
+// fermeture lightbox au clic sur la croix et on cache le dernier média affiché
+function CloseLightbox() {
+  close_lightbox.addEventListener('click', () => {
+    bg_lightbox.style.display = 'none';
+  });
+}
+CloseLightbox();
+
+//navigation au clavier, fleches gauche et droite, touche échap pour sortir
+window.addEventListener('keydown', function (e) {
+  console.log(e);
+  if (e.key == 'ArrowRight') {
+    arrowRight();
+  }
+  if (e.key == 'ArrowLeft') {
+    arrowLeft();
+  }
+  if (e.key == 'Escape') {
+    bg_lightbox.style.display = 'none';
+  }
+});
 
 // Fonction qui affiche soit video ou soit photo en fonction du media json
 function choix_media(Elmedia) {
@@ -407,7 +396,7 @@ function bigMediaLightbox(Elmedia) {
     );
   }
 }
-//Filtre dropdow
+//FILTRE DROPDOWN
 
 //On écoute au changement de filtre dropdown le choix et on réaffiche les médias en fonction du résultat de popularité, date ou titre
 let dropdown = document.querySelector('select');
