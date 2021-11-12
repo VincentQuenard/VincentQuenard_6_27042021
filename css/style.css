@@ -109,10 +109,6 @@ a.tag_link.selected_tag {
   color: white;
   background-color: #901c1c;
 }
-a.tag_link:hover {
-  color: white;
-  background-color: #901c1c;
-}
 
 /*
 */
