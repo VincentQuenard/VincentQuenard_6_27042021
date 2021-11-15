@@ -1,19 +1,23 @@
+//variable qui récupère les données de photopgraphes.json
 const linkToJson = './photographes.json';
-let element;
+//variable recupérant les médias du photographe affiché dans un tableau
 let tableau_medias = [];
-let mediaActive = '';
 
-//VARIABLES LIGHTBOX
+//----------------VARIABLES FILTRE DROPDOWN------------------------------
+let dropdown = document.querySelector('select');
+let containerMedias = document.querySelector('.medias_photographe');
+
+//-------------VARIABLES LIGHTBOX--------------------------------
 const bg_lightbox = document.querySelector('.lightbox_container');
 const close_lightbox = document.querySelector('.close_bigger');
 const lightboxMediaBox = document.querySelector('.lightbox_media_box');
-const buttonClose = document.querySelector('.close_modal');
 const arrowRight = document.querySelector('.arrow_right');
 const arrowLeft = document.querySelector('.arrow_left');
+let mediaActive = '';
 
-//VARIABLES MODALE
+//----------------VARIABLES MODALE------------------------------
 const modalbg = document.querySelector('.background_modal');
-
+const buttonClose = document.querySelector('.close_modal');
 //sélection des balises du formulaires
 
 const formulaire = document.getElementById('formulaire');
@@ -53,14 +57,16 @@ window.addEventListener('load', () => {
             banner_photographe(Elphoto);
             //Affichage bannière pied de page à droite avec total des likes et le tarif journalier du photographe
             totalLikesPriceDay(Elphoto);
+            //ouverture modale
             openModale();
+            //Affichage du nom du photographe dans la modale
             modalePhotographerName(Elphoto);
+            //Fermeture au clic sur la croix ou touche échap du clavier de la modale
             closeModale();
           }
         });
 
       //Partie du fetch pour l'affichage et les actions sur la partie média des photographes
-      if (data.media != undefined) element = data.media;
 
       data.media.forEach((Elmedia) => {
         //Si l'id contenu dans l'url == au photographeID du media)
@@ -69,6 +75,7 @@ window.addEventListener('load', () => {
           media_photographe_display(Elmedia);
           //Incrémentation des likes au click
           clickJaime(Elmedia);
+          //Affichage médias au changement de filtre dropdown
           tableau_medias.push(Elmedia);
         }
       });
@@ -78,6 +85,8 @@ window.addEventListener('load', () => {
       console.log('Erreur' + err);
     });
 });
+
+//-------------------CREATION DE LA PAGE PHOTOGRAPHE EN JS----------------
 
 /* fonction qui va créer le code html de la banniere du photographe */
 function banner_photographe(Elphoto) {
@@ -165,7 +174,7 @@ function media_photographe_display(Elmedia) {
     '</div>' +
     '</div>' +
     '</div>';
-  //A chaque tri du select on recharge la page donc on ouvre la lightbox dans la fonction pour que les medias restent
+  //A chaque tri du select on recharge la page donc on ouvre la lightbox dans la fonction d'affichage des médias pour que les medias restent cliquables
   openLightbox();
 }
 
@@ -191,16 +200,32 @@ function choix_media(Elmedia) {
     );
   }
 }
+
+//Injection dans l'html de la bannière des likes totaux et du tarif/jour du photographe
+function totalLikesPriceDay(likesPrice) {
+  //injection de la bannière deslikes totaux
+  let total_likes = document.createElement('span');
+  total_likes.setAttribute('id', 'likes');
+  document.querySelector('#likes_price').appendChild(total_likes);
+  total_likes.innerHTML = '<p id="total_likes">';
+  '</p>' + '<i class="far fa-heart total"></i>';
+  /* Ajout du prix du photographe affiché par jour  */
+  let price_day = document.createElement('span');
+  price_day.setAttribute('id', 'price_day');
+  document.querySelector('#likes_price').appendChild(price_day);
+  price_day.innerHTML += `${likesPrice.price}€ / jour`;
+}
+
+//--------------INCREMENTATION AU CLIC SUR LE COEUR DES LIKES DU PHOTOGRAPHE ----------------ET DU TOTAL DES LIKES SUR LA PAGE-------------
 //Fonction qui va incrémenter le nombre de likes au clic sur les coeurs
 function clickJaime(id) {
-  element.forEach((addLike) => {
-    //console.log(addLike);
+  tableau_medias.forEach((addLike) => {
     if (addLike.id == id) {
       addLike.likes += 1;
       document.getElementById(id).innerHTML = addLike.likes;
     }
   });
-  totalLikes(element);
+  totalLikes(tableau_medias);
 }
 //fonction qui va faire la somme des likes et s'incrémenter s'il y a un clic sur un coeur
 function totalLikes(total) {
@@ -217,40 +242,30 @@ function totalLikes(total) {
 //----------------------FILTRE DROPDOWN-------------------------------
 
 //On écoute au changement de filtre dropdown le choix et on réaffiche les médias en fonction du résultat de popularité, date ou titre
-let dropdown = document.querySelector('select');
-let containerMedias = document.querySelector('.medias_photographe');
-dropdown.addEventListener('change', function (e) {
-  e.target.value;
+function filterDropdown() {
+  dropdown.addEventListener('change', function (e) {
+    e.target.value;
 
-  containerMedias.innerHTML = '';
+    containerMedias.innerHTML = '';
 
-  if (e.target.value == 'popularite') {
-    tableau_medias.sort((a, b) => (a.likes < b.likes ? 1 : -1));
-  } else if (e.target.value == 'date') {
+    if (e.target.value == 'popularite') {
+      tableau_medias.sort((a, b) => (a.likes < b.likes ? 1 : -1));
+    } else if (e.target.value == 'date') {
+      console.log(tableau_medias);
+      tableau_medias.sort((a, b) => (a.date > b.date ? 1 : -1));
+      console.log(tableau_medias);
+    } else if (e.target.value == 'titre') {
+      tableau_medias.sort((a, b) => (a.title > b.title ? 1 : -1));
+    }
     console.log(tableau_medias);
-    tableau_medias.sort((a, b) => (a.date > b.date ? 1 : -1));
-    console.log(tableau_medias);
-  } else if (e.target.value == 'titre') {
-    tableau_medias.sort((a, b) => (a.title > b.title ? 1 : -1));
-  }
-  tableau_medias.forEach((tab) => {
-    media_photographe_display(tab);
+    tableau_medias.forEach((tab) => {
+      media_photographe_display(tab);
+    });
   });
-});
-function totalLikesPriceDay(likesPrice) {
-  //injection de la bannière deslikes totaux
-  let total_likes = document.createElement('span');
-  total_likes.setAttribute('id', 'likes');
-  document.querySelector('#likes_price').appendChild(total_likes);
-  total_likes.innerHTML = '<p id="total_likes">';
-  '</p>' + '<i class="far fa-heart total"></i>';
-  /* Ajout du prix du photographe affiché par jour  */
-  let price_day = document.createElement('span');
-  price_day.setAttribute('id', 'price_day');
-  document.querySelector('#likes_price').appendChild(price_day);
-  price_day.innerHTML += `${likesPrice.price}€ / jour`;
 }
+filterDropdown();
 
+//----------------------MODALE----------------------------
 // ouverture formulaire au clic sur bouton 'contactez-moi'
 function openModale() {
   const modalBtn = document.querySelector('.banner_photographe_button');
@@ -400,7 +415,6 @@ function affichageLightbox(currentMedia) {
 }
 //clic flèche suivant
 const displayNext = function () {
-  console.log(mediaActive);
   mediaActive++;
   if (mediaActive === tableau_medias.length) {
     mediaActive = 0;
@@ -413,8 +427,6 @@ arrowRight.addEventListener('click', function () {
 
 //clic flèche précédente
 const displayPrevious = function () {
-  console.log(mediaActive);
-  console.log(tableau_medias.length);
   mediaActive--;
   if (mediaActive < 0) {
     mediaActive = tableau_medias.length - 1;

@@ -1,6 +1,7 @@
 //Constante qui récupère les données de photopgraphes.json
 const linkToJson = './photographes.json';
-
+//variable recupérant les données du photographe affichés dans un tableau
+let photographes = [];
 //Constante qui sélectionne les filtres
 const tagsCheck = document.querySelectorAll('.tag_link');
 //récupération de l'url
@@ -17,51 +18,14 @@ window.addEventListener('load', () => {
       }
     })
     .then(function (data) {
+      filterTag();
       if (data.photographers != undefined)
         data.photographers.forEach((Elphoto) => {
           createPhotographe(Elphoto);
         });
 
-      //Affichage des photographes en fonction du filtre sélectionné
-      let photographes = data.photographers;
+      photographes = data.photographers;
 
-      for (let i = 0; i < tagsCheck.length; i++) {
-        tagsCheck[i].addEventListener('click', (e) => {
-          //On récupère le nom du filtre sélectionné lors du clic
-          e.target.dataset.filter;
-          // on vide la page des photographes pour la reconstuire en fonction des filtres sélectionnés
-          document.querySelector('#photographe_container').innerHTML = '';
-          // On déclare une variable égale à un tableau vide que l'on remplit en fonction des résultats obtenus aux clics.
-          let resultat = [];
-          // la classe selected tag est ajoutée en html sur la balise sélectionnée
-          if (e.target.classList.contains('selected_tag')) {
-            e.target.classList.remove('selected_tag');
-          } else {
-            e.target.classList.add('selected_tag');
-          }
-          let tag_selected = document.querySelectorAll('.selected_tag');
-          //Si aucun tag n'est sélectionné, on affiche tous les photographes
-          if (tag_selected.length == 0) {
-            resultat = photographes;
-          } else {
-            //Sinon on affiche que ceux ayant la spécialité du filtre
-            tag_selected.forEach((values) => {
-              photographes.filter((photographe) => {
-                if (photographe.tags.indexOf(values.dataset.filter) != -1) {
-                  // console.log(values.dataset.filter);
-                  if (!resultat.includes(photographe)) {
-                    resultat.push(photographe);
-                  }
-                }
-              });
-            });
-          }
-          //On affiche chaque photographe ayant le filtre cliqué
-          resultat.forEach((Elphoto) => {
-            createPhotographe(Elphoto);
-          });
-        });
-      }
       //Filtre de la page index en fonction du tag sélectionné sur la page photographe
       if (tagUrl != null) {
         document.querySelector('#photographe_container').innerHTML = '';
@@ -80,7 +44,7 @@ window.addEventListener('load', () => {
       console.log('Erreur' + err);
     });
 });
-
+//-----------------------CREATION DE LA PAGE HTML-----------------
 /*fonction de création des tags*/
 function createTag(elementTag) {
   let result = '';
@@ -136,6 +100,48 @@ function createPhotographe(Elphoto) {
     /*appel de la fonction créant les tags en fonction du retour contenu dans le fichier .json*/
     createTag(Elphoto.tags);
   '</ul>' + '</section>';
+}
+
+//-------------AFFICHAGE PHOTOGRAPHES PAGE HTML EN FONCTION DES FILTRES SELECTIONNE----------
+
+function filterTag() {
+  for (let i = 0; i < tagsCheck.length; i++) {
+    tagsCheck[i].addEventListener('click', (e) => {
+      //On récupère le nom du filtre sélectionné lors du clic
+      e.target.dataset.filter;
+      // on vide la page des photographes pour la reconstuire en fonction des filtres sélectionnés
+      document.querySelector('#photographe_container').innerHTML = '';
+      // On déclare une variable égale à un tableau vide que l'on remplit en fonction des résultats obtenus aux clics.
+      let resultat = [];
+      // la classe selected tag est ajoutée en html sur la balise sélectionnée
+      if (e.target.classList.contains('selected_tag')) {
+        e.target.classList.remove('selected_tag');
+      } else {
+        e.target.classList.add('selected_tag');
+      }
+      let tag_selected = document.querySelectorAll('.selected_tag');
+      //Si aucun tag n'est sélectionné, on affiche tous les photographes
+      if (tag_selected.length == 0) {
+        resultat = photographes;
+      } else {
+        //Sinon on affiche que ceux ayant la spécialité du filtre
+        tag_selected.forEach((values) => {
+          photographes.filter((photographe) => {
+            if (photographe.tags.indexOf(values.dataset.filter) != -1) {
+              // console.log(values.dataset.filter);
+              if (!resultat.includes(photographe)) {
+                resultat.push(photographe);
+              }
+            }
+          });
+        });
+      }
+      //On affiche chaque photographe ayant le filtre cliqué
+      resultat.forEach((Elphoto) => {
+        createPhotographe(Elphoto);
+      });
+    });
+  }
 }
 
 //Bouton passer au contenu
