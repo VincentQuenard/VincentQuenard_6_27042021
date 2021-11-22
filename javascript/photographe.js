@@ -233,7 +233,6 @@ function totalLikes(total) {
   total.forEach((addLike) => {
     if (addLike.photographerId == idURL) {
       somme += addLike.likes;
-      console.log(addLike.likes);
     }
   });
   document.getElementById('total_likes').innerHTML =
@@ -250,7 +249,7 @@ function filterDropdown() {
     containerMedias.innerHTML = '';
 
     if (e.target.value == 'popularite') {
-      tableau_medias.sort((a, b) => (a.likes < b.likes ? 1 : -1));
+      tableau_medias.sort((a, b) => (a.likes > b.likes ? 1 : -1));
     } else if (e.target.value == 'date') {
       tableau_medias.sort((a, b) => (a.date > b.date ? 1 : -1));
     } else if (e.target.value == 'titre') {
