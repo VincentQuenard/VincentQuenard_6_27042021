@@ -230,9 +230,10 @@ function clickJaime(id) {
 //fonction qui va faire la somme des likes et s'incrémenter s'il y a un clic sur un coeur
 function totalLikes(total) {
   let somme = 0;
-  total.forEach((aime) => {
-    if (aime.photographerId == idURL) {
-      somme += aime.likes;
+  total.forEach((addLike) => {
+    if (addLike.photographerId == idURL) {
+      somme += addLike.likes;
+      console.log(addLike.likes);
     }
   });
   document.getElementById('total_likes').innerHTML =
