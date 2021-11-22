@@ -447,7 +447,6 @@ CloseLightbox();
 
 //navigation au clavier, fleches gauche et droite, touche échap pour sortir
 window.addEventListener('keydown', function (e) {
-  console.log(e);
   if (e.key == 'ArrowRight') {
     displayNext();
   }
