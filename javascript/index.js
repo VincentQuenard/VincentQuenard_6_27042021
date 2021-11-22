@@ -9,7 +9,7 @@ let params = new URL(document.location).searchParams;
 //récupération du tag contenu dans l'url
 let tagUrl = params.get('tag');
 
-/*fetch va faire une requête au fichier json si ok alors .then et exécution de la fonction, sinon erreur .catch*/
+/*fetch va faire une requête au fichier json si ok alors .then et exécution de la fonction qui va traiter la data pour créer la page web, sinon erreur .catch*/
 window.addEventListener('load', () => {
   fetch(linkToJson)
     .then(function (response) {
@@ -45,24 +45,7 @@ window.addEventListener('load', () => {
     });
 });
 //-----------------------CREATION DE LA PAGE HTML-----------------
-/*fonction de création des tags*/
-function createTag(elementTag) {
-  let result = '';
-  elementTag.forEach((tag) => {
-    result +=
-      '<li>' +
-      '<span class="sr_only">Tag link</span>' +
-      '<a class="tag_link" data-filter="' +
-      tag +
-      '" aria-labelledby="' +
-      tag +
-      '" href="#">#' +
-      tag +
-      '</a>' +
-      '</li>';
-  });
-  return result;
-}
+
 /* fonction qui va créer le code html d'un photographe en fonction de ses données du fichier json*/
 function createPhotographe(Elphoto) {
   let decriptionPhotographe = document.createElement('section');
@@ -102,6 +85,24 @@ function createPhotographe(Elphoto) {
   '</ul>' + '</section>';
 }
 
+/*fonction de création des tags*/
+function createTag(elementTag) {
+  let result = '';
+  elementTag.forEach((tag) => {
+    result +=
+      '<li>' +
+      '<span class="sr_only">Tag link</span>' +
+      '<a class="tag_link" data-filter="' +
+      tag +
+      '" aria-labelledby="' +
+      tag +
+      '" href="#">#' +
+      tag +
+      '</a>' +
+      '</li>';
+  });
+  return result;
+}
 //-------------AFFICHAGE PHOTOGRAPHES PAGE HTML EN FONCTION DES FILTRES SELECTIONNE----------
 
 function filterTag() {
@@ -128,7 +129,7 @@ function filterTag() {
         tag_selected.forEach((values) => {
           photographes.filter((photographe) => {
             if (photographe.tags.indexOf(values.dataset.filter) != -1) {
-              // console.log(values.dataset.filter);
+              console.log(values.dataset.filter);
               if (!resultat.includes(photographe)) {
                 resultat.push(photographe);
               }

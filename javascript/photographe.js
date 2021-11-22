@@ -1,6 +1,11 @@
 //variable qui récupère les données de photopgraphes.json
 const linkToJson = './photographes.json';
-//variable recupérant les médias du photographe affiché dans un tableau
+//récupération de l'url
+let params = new URL(document.location).searchParams;
+//récupération de l'id spécifique à chaque photographe
+let idURL = params.get('id');
+
+//variable recupérant les médias du photographe affichés dans un tableau
 let tableau_medias = [];
 
 //----------------VARIABLES FILTRE DROPDOWN------------------------------
@@ -34,11 +39,6 @@ const envoi_formulaire = document.querySelector('.btn_submit');
 //Regex
 const regexLettres = /^[a-zA-Z-\s]+$/;
 const regexMessagerie = /^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
-
-//récupération de l'url
-let params = new URL(document.location).searchParams;
-//récupération de l'id spécifique à chaque photographe
-let idURL = params.get('id');
 
 window.addEventListener('load', () => {
   fetch(linkToJson)
@@ -251,13 +251,11 @@ function filterDropdown() {
     if (e.target.value == 'popularite') {
       tableau_medias.sort((a, b) => (a.likes < b.likes ? 1 : -1));
     } else if (e.target.value == 'date') {
-      console.log(tableau_medias);
       tableau_medias.sort((a, b) => (a.date > b.date ? 1 : -1));
-      console.log(tableau_medias);
     } else if (e.target.value == 'titre') {
       tableau_medias.sort((a, b) => (a.title > b.title ? 1 : -1));
     }
-    console.log(tableau_medias);
+
     tableau_medias.forEach((tab) => {
       media_photographe_display(tab);
     });
@@ -271,6 +269,8 @@ function openModale() {
   const modalBtn = document.querySelector('.banner_photographe_button');
   modalBtn.addEventListener('click', () => {
     modalbg.style.display = 'block';
+    //on met le curseur dans le premier champ qui est celui du prénom
+    prenom.focus();
   });
 }
 //Fermeture formulaire au clic sur la croix ou au clavier touche échap
